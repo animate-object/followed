@@ -1,5 +1,6 @@
 import React from "react";
-import { Cell as CellT, Dimension } from "../types";
+import { Cell as CellT } from "../types";
+import styles from "./Cell.css";
 
 interface Props {
   cell: CellT.Cell;
@@ -13,15 +14,14 @@ export const Cell = ({ cell }: Props): JSX.Element => {
   const { walls } = cell;
   return (
     <span
+      className={styles.root}
       style={{
-        boxSizing: "border-box",
         borderTop: drawSide(walls.n),
         borderRight: drawSide(walls.e),
         borderBottom: drawSide(walls.s),
         borderLeft: drawSide(walls.w),
-        height: "2rem",
-        width: "2rem",
-        display: "inline-block"
+        height: "1rem",
+        width: "1rem"
       }}
     />
   );

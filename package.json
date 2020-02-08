@@ -2,6 +2,7 @@
   "name": "followed",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://animate-object.github.io/followed",
   "dependencies": {
     "classnames": "^2.2.6",
     "react": "^16.12.0",
@@ -23,15 +24,18 @@
     "@types/react-redux": "^7.1.7",
     "@types/redux-saga": "^0.10.5",
     "@types/reselect": "^2.2.0",
-    "typescript": "~3.7.2",
+    "gh-pages": "^2.2.0",
+    "prettier": "^1.19.1",
     "react-scripts": "3.3.1",
-    "prettier": "^1.19.1"
+    "typescript": "~3.7.2",
+    "typescript-plugin-css-modules": "^2.1.2"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": "react-app"

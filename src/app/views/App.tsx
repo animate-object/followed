@@ -3,8 +3,7 @@ import classNames from "classnames";
 import "./App.css";
 import { connect } from "react-redux";
 import { State, GameData } from "../state";
-import { Maze, Loadable } from "../types";
-import { Grid } from "./Grid";
+import { Loadable } from "../types";
 import { getGame } from "../selectors";
 import { Game } from "./Game";
 
@@ -18,7 +17,7 @@ type Props = StateProps & DispatchProps;
 
 const App = ({ game }: Props) => {
   return (
-    <div className={classNames("root", "gray-bg")}>
+    <div className={classNames("root")}>
       {Loadable.isLoading(game) && <span>Loading . . . </span>}
       {Loadable.isLoaded(game) && <Game {...game.data} />}
     </div>

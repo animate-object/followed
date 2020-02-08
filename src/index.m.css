@@ -1,0 +1,17 @@
+/* to be updated */
+:root {
+  --gray: gray;
+  --red: red;
+  --blue: blue;
+  --white: #e9e9e9;
+}
+
+.app {
+  background-color: var(--blue);
+  height: 50px;
+}
+
+.test-another {
+  background-color: blue;
+  height: 500px;
+}
