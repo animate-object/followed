@@ -6,6 +6,7 @@ import { State, GameData } from "../state";
 import { Maze, Loadable } from "../types";
 import { Grid } from "./Grid";
 import { getGame } from "../selectors";
+import { Game } from "./Game";
 
 interface StateProps {
   game: Loadable.Loadable<GameData>;
@@ -19,7 +20,7 @@ const App = ({ game }: Props) => {
   return (
     <div className={classNames("root", "gray-bg")}>
       {Loadable.isLoading(game) && <span>Loading . . . </span>}
-      {Loadable.isLoaded(game) && <Grid grid={game.data.maze.grid}></Grid>}
+      {Loadable.isLoaded(game) && <Game {...game.data} />}
     </div>
   );
 };

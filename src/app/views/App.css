@@ -6,7 +6,6 @@
   left: 0;
 }
 
-
 .gray-bg {
-  background-color: var(--gray);
+  background-color: var(--white);
 }
