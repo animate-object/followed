@@ -15,6 +15,7 @@
     "@types/redux-saga": "^0.10.5",
     "@types/reselect": "^2.2.0",
     "classnames": "^2.2.6",
+    "prettier": "^1.19.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-redux": "^7.1.3",
