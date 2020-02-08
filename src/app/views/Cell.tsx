@@ -19,8 +19,8 @@ export const Cell = ({ cell }: Props): JSX.Element => {
         borderRight: drawSide(walls.e),
         borderBottom: drawSide(walls.s),
         borderLeft: drawSide(walls.w),
-        height: 50,
-        width: 50,
+        height: "2rem",
+        width: "2rem",
         display: "inline-block"
       }}
     />

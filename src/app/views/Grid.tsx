@@ -8,7 +8,7 @@ interface Props {
 
 export const Grid = ({ grid }: Props): JSX.Element => {
   return (
-    <div>
+    <div style={{ overflow: "scroll", width: "max-content" }}>
       {grid.map(row => (
         <div style={{ lineHeight: 0 }}>
           {row.map(cell => (

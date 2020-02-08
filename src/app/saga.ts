@@ -1,6 +1,6 @@
 import { call, spawn, all, take, put } from "redux-saga/effects";
 import { Api } from "./util";
-import { Maze } from "./types";
+import { Maze, Dimension } from "./types";
 import {
   ActionTypes,
   RequestNewGame,
@@ -27,5 +27,12 @@ const sagas = [handleNewGame];
 
 export function* root() {
   yield all(sagas.map(s => spawn(s)));
-  yield put(requestNewGame());
+  yield put(
+    requestNewGame({
+      mazeOptions: {
+        dimension: Dimension.create(20, 20),
+        algorithm: "aldous-broder"
+      }
+    })
+  );
 }
