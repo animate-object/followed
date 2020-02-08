@@ -5,6 +5,11 @@ export interface MazeData {
   dimension: Dimension.Dimension;
 }
 
+export interface Options {
+  dimension?: Dimension.Dimension;
+  algorithm?: "aldous-broder" | "binary-tree" | "side-winder";
+}
+
 export const fromApi = (
   dimension: Dimension.Dimension,
   base64: string

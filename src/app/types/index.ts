@@ -1,3 +1,6 @@
 import * as Dimension from "./dimension";
 import * as MazeData from "./mazeData";
-export { Dimension, MazeData };
+import * as Maze from "./maze";
+import * as Cell from "./cell";
+
+export { Dimension, MazeData, Maze, Cell };
