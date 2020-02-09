@@ -7,7 +7,7 @@ export const reducer = (
 ): State.State => {
   switch (action.type) {
     case ActionTypes.START_NEW_GAME:
-      return State.newGame(state, action.maze);
+      return State.newGame(state, action.maze, action.entities);
     case ActionTypes.REQUEST_NEW_GAME:
     default:
       return state;

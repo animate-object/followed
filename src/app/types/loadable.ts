@@ -31,3 +31,6 @@ export const loaded = <T>(data: T): Loaded<T> => ({
 });
 
 export const errored = <T>(e: any): Errored => ({ state: "Errored", e });
+
+export const map = <T, R>(f: (t: T) => R, l: Loadable<T>): Loadable<R> =>
+  isLoaded(l) ? loaded(f(l.data)) : l;

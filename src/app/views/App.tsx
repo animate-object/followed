@@ -1,30 +1,31 @@
 import React from "react";
 import styles from "./App.css";
 import { connect } from "react-redux";
-import { State, GameData } from "../state";
+import { State } from "../state";
 import { Loadable } from "../types";
-import { getGame } from "../selectors";
+import { getDisplayGrid } from "../selectors";
 import { Game } from "./Game";
+import { GameData } from "../types/game";
 
 interface StateProps {
-  game: Loadable.Loadable<GameData>;
+  grid: Loadable.Loadable<GameData.DisplayGrid>;
 }
 
 interface DispatchProps {}
 
 type Props = StateProps & DispatchProps;
 
-const App = ({ game }: Props) => {
+const App = ({ grid }: Props) => {
   return (
     <div className={styles.root}>
-      {Loadable.isLoading(game) && <span>Loading . . . </span>}
-      {Loadable.isLoaded(game) && <Game {...game.data} />}
+      {Loadable.isLoading(grid) && <span>Loading . . . </span>}
+      {Loadable.isLoaded(grid) && <Game grid={grid.data} />}
     </div>
   );
 };
 
 export const mapStateToProps = (state: State): StateProps => ({
-  game: getGame(state)
+  grid: getDisplayGrid(state)
 });
 
 export default connect(mapStateToProps)(App);

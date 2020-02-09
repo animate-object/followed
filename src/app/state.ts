@@ -1,12 +1,10 @@
 import { Maze } from "./types";
 import { Loadable } from "./types";
-
-export interface GameData {
-  maze: Maze.Maze;
-}
+import { GameData, EntityData } from "./types/game";
+import { Entity } from "./types/entities";
 
 export interface State {
-  game: Loadable.Loadable<GameData>;
+  game: Loadable.Loadable<GameData.GameData>;
 }
 
 export const create = (init = {}): State => ({
@@ -19,7 +17,13 @@ export const requestingNewGame = (state: State): State => ({
   game: Loadable.loading()
 });
 
-export const newGame = (state: State, maze: Maze.Maze): State => ({
+export const newGame = (
+  state: State,
+  maze: Maze.Maze,
+  entities: Entity.Entity[]
+): State => ({
   ...state,
-  game: Loadable.loaded({ maze })
+  game: Loadable.loaded(
+    GameData.create(maze, EntityData.fromEntities(entities, maze.dimension))
+  )
 });

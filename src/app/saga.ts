@@ -7,6 +7,7 @@ import {
   startNewGame,
   requestNewGame
 } from "./actions";
+import { Player } from "./types/entities";
 
 function* handleNewGame() {
   while (true) {
@@ -15,7 +16,7 @@ function* handleNewGame() {
         ActionTypes.REQUEST_NEW_GAME
       );
       const data = yield call(Api.maze, options.mazeOptions || {});
-      yield put(startNewGame(Maze.fromMazeData(data)));
+      yield put(startNewGame(Maze.fromMazeData(data), [Player.create("Test")]));
     } catch (e) {
       console.warn("Error initializing new game");
       console.error(e);

@@ -1,11 +1,13 @@
 import * as React from "react";
-import { GameData } from "../state";
 import { Grid } from "./Grid";
+import { GameData } from "../types/game";
 
-type Props = GameData;
+interface Props {
+  grid: GameData.DisplayGrid;
+}
 
-export const Game = ({ maze }: Props): JSX.Element => (
+export const Game = ({ grid }: Props): JSX.Element => (
   <>
-    <Grid grid={maze.grid} />
+    <Grid grid={grid} />
   </>
 );
