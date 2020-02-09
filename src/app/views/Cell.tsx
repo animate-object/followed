@@ -20,8 +20,8 @@ export const Cell = ({ cell }: Props): JSX.Element => {
         borderRight: drawSide(walls.e),
         borderBottom: drawSide(walls.s),
         borderLeft: drawSide(walls.w),
-        height: "1rem",
-        width: "1rem"
+        height: "1.5rem",
+        width: "1.5rem"
       }}
     />
   );

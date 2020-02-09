@@ -30,7 +30,7 @@ export function* root() {
   yield put(
     requestNewGame({
       mazeOptions: {
-        dimension: Dimension.create(20, 20),
+        dimension: Dimension.create(15, 15),
         algorithm: "aldous-broder"
       }
     })
