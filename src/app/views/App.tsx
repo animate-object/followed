@@ -1,6 +1,5 @@
 import React from "react";
-import classNames from "classnames";
-import "./App.css";
+import styles from "./App.css";
 import { connect } from "react-redux";
 import { State, GameData } from "../state";
 import { Loadable } from "../types";
@@ -17,7 +16,7 @@ type Props = StateProps & DispatchProps;
 
 const App = ({ game }: Props) => {
   return (
-    <div className={classNames("root")}>
+    <div className={styles.root}>
       {Loadable.isLoading(game) && <span>Loading . . . </span>}
       {Loadable.isLoaded(game) && <Game {...game.data} />}
     </div>

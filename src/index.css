@@ -1,17 +1,22 @@
 /* to be updated */
 :root {
-  --gray: gray;
-  --red: red;
-  --blue: blue;
+  --light-gray: #ababb1;
+  --light-red: #fb5454;
+  --light-blue: #b0beec;
+
+  --gray: #4d4d4d;
+  --red: #ad1717;
+  --blue: #262690;
+
   --white: #e9e9e9;
 }
 
 .app {
-  background-color: var(--blue);
-  height: 50px;
-}
+  height: 100vh;
+  width: 100vw;
+  position: absolute;
+  top: 0;
+  left: 0;
 
-.test-another {
-  background-color: blue;
-  height: 500px;
+  background-color: var(--light-gray);
 }
