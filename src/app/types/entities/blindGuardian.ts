@@ -32,7 +32,7 @@ export const next = (
 
   let direction: Direction.Direction;
 
-  if (options.includes(e.heading)) {
+  if (options.includes(e.heading) && Math.random() > 0.75) {
     direction = e.heading;
   } else if (Math.random() > 0.75 && adjacent.length > 0) {
     direction = Arrays.randomItem(adjacent);

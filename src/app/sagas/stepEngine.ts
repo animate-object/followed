@@ -19,13 +19,11 @@ export function* stepEngine() {
         );
 
         if (Result.isErr(stepValidation)) {
-          console.log(stepValidation);
           yield put(abortStep(step.id));
           continue;
         }
 
         const aiInstructions = GameData.generateAllAIInstructions(gameData);
-        console.log(aiInstructions);
         const instructions = [...aiInstructions, ...step.instructions];
 
         const applied = yield call(

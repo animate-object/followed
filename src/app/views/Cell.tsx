@@ -1,5 +1,5 @@
 import React from "react";
-import { Cell as CellT } from "../types";
+import { Cell as CellT, Maybe } from "../types";
 import styles from "./Cell.css";
 import { Entity as EntityT } from "../types/entities";
 import { Entity } from "./Entity";
@@ -27,9 +27,12 @@ export const Cell = ({ cell, occupants }: Props): JSX.Element => {
         width: "1.5rem"
       }}
     >
-      {occupants.map((o, idx) => (
-        <Entity key={idx} {...o} />
-      ))}
+      {Maybe.map(
+        o => (
+          <Entity {...o} />
+        ),
+        occupants[0]
+      )}
     </div>
   );
 };
