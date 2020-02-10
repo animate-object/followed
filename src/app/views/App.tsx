@@ -3,13 +3,8 @@ import styles from "./App.css";
 import { connect } from "react-redux";
 import { State } from "../state";
 import { Loadable, Effect, Direction } from "../types";
-import {
-  getDisplayGrid,
-  getIsProcessingStep,
-  getWindowedDisplayGrid
-} from "../selectors";
+import { getIsProcessingStep, getWindowedDisplayGrid } from "../selectors";
 import { Game } from "./Game";
-import { GameData } from "../types/game";
 import { AppAction, movePlayer } from "../actions";
 import { WindowedGrid } from "../util/camera";
 
@@ -28,14 +23,13 @@ const App = ({ grid, processingUpdates, onMove }: Props) => {
   return (
     <div className={styles.root}>
       {Loadable.isLoading(grid) && <span>Loading . . . </span>}
-      {Loadable.isLoaded(grid) &&
-        grid.data && (
-          <Game
-            processingUpdates={processingUpdates}
-            grid={grid.data}
-            onMove={onMove}
-          />
-        )}
+      {Loadable.isLoaded(grid) && grid.data && (
+        <Game
+          processingUpdates={processingUpdates}
+          grid={grid.data}
+          onMove={onMove}
+        />
+      )}
     </div>
   );
 };

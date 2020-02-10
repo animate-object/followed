@@ -1,6 +1,5 @@
 import * as React from "react";
 import { Grid } from "./Grid";
-import { GameData } from "../types/game";
 import { GamePad } from "./GamePad";
 import { Effect, Direction } from "../types";
 import { KeyPad } from "./KeyPad";

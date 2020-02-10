@@ -1,6 +1,6 @@
 import { RequestStep, abortStep, completeStep, ActionTypes } from "../actions";
 import { Loadable, Instruction, Result } from "../types";
-import { GameData } from "../types/game";
+import { GameData, EntityData } from "../types/game";
 import { select, put, take, call } from "redux-saga/effects";
 import { getGame } from "../selectors";
 
@@ -12,7 +12,7 @@ export function* stepEngine() {
       if (Loadable.isLoaded(game)) {
         const { data: gameData } = game;
 
-        const stepValidation = yield call(
+        const stepValidation: Result.Result<void> = yield call(
           Instruction.validateAll,
           step.instructions,
           gameData
@@ -26,7 +26,7 @@ export function* stepEngine() {
         const aiInstructions = GameData.generateAllAIInstructions(gameData);
         const instructions = [...aiInstructions, ...step.instructions];
 
-        const applied = yield call(
+        const applied: Result.Result<GameData.GameData> = yield call(
           Instruction.applyAll,
           instructions,
           gameData
@@ -38,10 +38,33 @@ export function* stepEngine() {
         }
 
         yield put(completeStep(step.id, applied.data));
+
+        // player collisions POC:
+        yield call(processCollisions, applied.data);
       }
     } catch (e) {
       console.warn("Error processing step");
       console.error(e);
     }
+  }
+}
+
+export function* processCollisions(gameData: GameData.GameData) {
+  const player =
+    gameData.entityData.entityMap[gameData.entityData.playerEntityId!];
+  const collisions = EntityData.entitiesAtPoint(
+    gameData.entityData,
+    player.position,
+    gameData.maze.dimension
+  ).filter(e => e.id !== player.id);
+
+  if (collisions.length === 0) {
+    return;
+  } else if (collisions.find(e => e.type === "blind-guardian")) {
+    yield call(window.confirm, "You've been annihilated.");
+    window.location.reload();
+  } else if (collisions.find(e => e.type === "exit")) {
+    yield call(window.confirm, "You have escaped with your life. . . for now.");
+    window.location.reload();
   }
 }
