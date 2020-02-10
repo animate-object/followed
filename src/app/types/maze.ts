@@ -1,6 +1,6 @@
 import * as Cell from "./cell";
 import * as MazeData from "./mazeData";
-import { Dimension } from ".";
+import { Dimension, Point, Direction } from ".";
 
 export interface Maze {
   readonly grid: Grid;
@@ -23,4 +23,13 @@ export const fromMazeData = ({ dimension, bytes }: MazeData.MazeData): Maze => {
     grid,
     dimension
   };
+};
+
+export const canWalk = (
+  maze: Maze,
+  { x, y }: Point.Point,
+  direction: Direction.Direction
+): boolean => {
+  const cell = maze.grid[y][x];
+  return !Cell.hasWall(cell, direction);
 };

@@ -1,3 +1,5 @@
+import { Direction } from ".";
+
 export interface Cell {
   walls: Walls;
 }
@@ -27,3 +29,19 @@ export const fromByte = (byte: number) => ({
     w: !((byte & 0b00000001) > 0)
   })
 });
+
+export const hasWall = (
+  { walls }: Cell,
+  direction: Direction.Direction
+): boolean => {
+  switch (direction) {
+    case Direction.Direction.NORTH:
+      return walls.n;
+    case Direction.Direction.EAST:
+      return walls.e;
+    case Direction.Direction.SOUTH:
+      return walls.s;
+    case Direction.Direction.WEST:
+      return walls.w;
+  }
+};

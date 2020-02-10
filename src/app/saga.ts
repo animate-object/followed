@@ -8,6 +8,8 @@ import {
   requestNewGame
 } from "./actions";
 import { Player } from "./types/entities";
+import { stepEngine } from "./sagas/stepEngine";
+import { movePlayer } from "./sagas/movePlayer";
 
 function* handleNewGame() {
   while (true) {
@@ -24,7 +26,7 @@ function* handleNewGame() {
   }
 }
 
-const sagas = [handleNewGame];
+const sagas = [handleNewGame, stepEngine, movePlayer];
 
 export function* root() {
   yield all(sagas.map(s => spawn(s)));
