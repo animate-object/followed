@@ -3,6 +3,7 @@ import { Cell as CellT, Maybe } from "../types";
 import styles from "./Cell.css";
 import { Entity as EntityT } from "../types/entities";
 import { Entity } from "./Entity";
+import classNames from "classnames";
 
 interface Props {
   cell: CellT.Cell;
@@ -22,9 +23,7 @@ export const Cell = ({ cell, occupants }: Props): JSX.Element => {
         borderTop: drawSide(walls.n),
         borderRight: drawSide(walls.e),
         borderBottom: drawSide(walls.s),
-        borderLeft: drawSide(walls.w),
-        height: "1.5rem",
-        width: "1.5rem"
+        borderLeft: drawSide(walls.w)
       }}
     >
       {Maybe.map(
@@ -36,3 +35,7 @@ export const Cell = ({ cell, occupants }: Props): JSX.Element => {
     </div>
   );
 };
+
+export const EmptyCell = () => (
+  <div className={classNames(styles.empty, styles.root)}></div>
+);

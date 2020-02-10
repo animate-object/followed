@@ -4,9 +4,10 @@ import { GameData } from "../types/game";
 import { GamePad } from "./GamePad";
 import { Effect, Direction } from "../types";
 import { KeyPad } from "./KeyPad";
+import { Camera } from "../util";
 
 interface Props {
-  grid: GameData.DisplayGrid;
+  grid: Camera.WindowedGrid;
   onMove: Effect.Effect1<Direction.Direction>;
   processingUpdates: boolean;
 }

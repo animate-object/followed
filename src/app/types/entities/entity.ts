@@ -1,13 +1,15 @@
 import { GameData } from "../game";
 import { Instruction } from "..";
-import { BlindGuardian, Player } from ".";
+import { BlindGuardian, Player, Exit } from ".";
 
-export type Entity = Player.Player | BlindGuardian.BlindGuardian;
+export type Entity = Player.Player | BlindGuardian.BlindGuardian | Exit.Exit;
 
 export const getColor = (e: Entity): string => {
   switch (e.type) {
     case "player":
       return "var(--blue)";
+    case "exit":
+      return "var(--green)";
     default:
       return "var(--red)";
   }

@@ -2,6 +2,7 @@ import { State } from "./state";
 import { createSelector } from "reselect";
 import { Loadable, Maybe } from "./types";
 import { GameData } from "./types/game";
+import { Camera } from "./util";
 
 export const getState = (state: State): State => state;
 
@@ -23,4 +24,15 @@ export const getPlayer = createSelector(getGame, game =>
         game.data.entityData.playerEntityId
       )
     : undefined
+);
+
+export const getWindowedDisplayGrid = createSelector(
+  getDisplayGrid,
+  getPlayer,
+  (displayGrid, player) =>
+    Loadable.map(
+      grid =>
+        player != null ? Camera.centerOnPoint(grid, player.position, 3) : [],
+      displayGrid
+    )
 );
