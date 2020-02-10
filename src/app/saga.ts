@@ -1,32 +1,11 @@
-import { call, spawn, all, take, put } from "redux-saga/effects";
-import { Api } from "./util";
-import { Maze, Dimension } from "./types";
-import {
-  ActionTypes,
-  RequestNewGame,
-  startNewGame,
-  requestNewGame
-} from "./actions";
-import { Player } from "./types/entities";
+import { spawn, all, put } from "redux-saga/effects";
+import { Dimension } from "./types";
+import { requestNewGame } from "./actions";
 import { stepEngine } from "./sagas/stepEngine";
 import { movePlayer } from "./sagas/movePlayer";
+import { newGame } from "./sagas/newGame";
 
-function* handleNewGame() {
-  while (true) {
-    try {
-      const { options }: RequestNewGame = yield take(
-        ActionTypes.REQUEST_NEW_GAME
-      );
-      const data = yield call(Api.maze, options.mazeOptions || {});
-      yield put(startNewGame(Maze.fromMazeData(data), [Player.create("Test")]));
-    } catch (e) {
-      console.warn("Error initializing new game");
-      console.error(e);
-    }
-  }
-}
-
-const sagas = [handleNewGame, stepEngine, movePlayer];
+const sagas = [newGame, stepEngine, movePlayer];
 
 export function* root() {
   yield all(sagas.map(s => spawn(s)));

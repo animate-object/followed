@@ -2,19 +2,19 @@
   padding-top: 2rem;
   display: flex;
   flex-direction: column;
-  height: 6rem;
-  width: 6rem;
+  height: 9em;
+  width: 9em;
 }
 
 .row {
-  height: 2rem;
-  width: 6rem;
+  height: 3rem;
+  width: 9em;
   display: flex;
 }
 
 .block {
-  height: 2rem;
-  width: 2rem;
+  height: 3rem;
+  width: 3rem;
 }
 
 .button {

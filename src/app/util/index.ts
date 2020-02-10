@@ -1,3 +1,4 @@
 import * as Api from "./api";
-
-export { Api };
+import * as Arrays from "./arrays";
+import * as Numbers from "./numbers";
+export { Api, Arrays, Numbers };

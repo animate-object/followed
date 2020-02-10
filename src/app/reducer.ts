@@ -5,7 +5,7 @@ export const reducer = (
   state: State.State = State.create(),
   action: AppAction
 ): State.State => {
-  console.log({ state, action });
+  // console.log({ state, action });
   switch (action.type) {
     case ActionTypes.REQUEST_STEP:
       return State.requestStep(state, action.step.id);

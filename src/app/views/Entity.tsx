@@ -2,11 +2,11 @@ import React from "react";
 import { Entity as EntityT } from "../types/entities";
 import styles from "./Entity.css";
 
-export const Entity = (props: EntityT.Entity): JSX.Element => (
+export const Entity = (entity: EntityT.Entity): JSX.Element => (
   <div
     className={styles.root}
-    style={{ backgroundColor: EntityT.getColor(props) }}
+    style={{ backgroundColor: EntityT.getColor(entity) }}
   >
-    {props.name[0]}
+    {EntityT.getDisplayName(entity)}
   </div>
 );

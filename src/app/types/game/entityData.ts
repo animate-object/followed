@@ -5,6 +5,7 @@ export interface EntityData {
   entityMap: Record<ID.ID, Entity.Entity>;
   positionMap: Record<number, ID.ID[]>;
   playerEntityId: Maybe.Maybe<ID.ID>;
+  typeMap: Record<string, ID.ID[]>;
 }
 
 export const fromEntities = (
@@ -23,6 +24,13 @@ export const fromEntities = (
   playerEntityId: Maybe.map(
     p => p.id,
     entities.find(e => e.type === "player")
+  ),
+  typeMap: entities.reduce(
+    (m: Record<string, ID.ID[]>, e) => ({
+      ...m,
+      [e.type]: m[e.id] ? [...m[e.id], e.id] : [e.id]
+    }),
+    {}
   )
 });
 
@@ -62,3 +70,11 @@ export const moveEntity = (
     return data;
   }
 };
+
+export const updateEntity = (
+  updated: Entity.Entity,
+  data: EntityData
+): EntityData => ({
+  ...data,
+  entityMap: { ...data.entityMap, [updated.id]: updated }
+});
