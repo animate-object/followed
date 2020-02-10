@@ -71,6 +71,7 @@ export const moveEntity = (
   }
 };
 
+// might need to augment to handle type change
 export const updateEntity = (
   updated: Entity.Entity,
   data: EntityData

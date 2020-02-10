@@ -24,9 +24,13 @@ export function* stepEngine() {
           continue;
         }
 
+        const aiInstructions = GameData.generateAllAIInstructions(gameData);
+        console.log(aiInstructions);
+        const instructions = [...aiInstructions, ...step.instructions];
+
         const applied = yield call(
           Instruction.applyAll,
-          step.instructions,
+          instructions,
           gameData
         );
 
@@ -43,5 +47,3 @@ export function* stepEngine() {
     }
   }
 }
-
-export function* generateAIInstructions() {}

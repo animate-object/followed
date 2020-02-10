@@ -1,10 +1,11 @@
 import { Result, Instruction } from "..";
-import { Move } from ".";
+import { Move, Update } from ".";
 import { GameData } from "../game";
 import { MoveInstruction } from "./move";
 import { InstructionType } from "./baseInstruction";
+import { UpdateInstruction } from "./update";
 
-export type Instruction = MoveInstruction;
+export type Instruction = MoveInstruction | UpdateInstruction;
 
 export const validate = (
   instruction: Instruction,
@@ -36,8 +37,8 @@ export const apply = (
     switch (instruction.type) {
       case InstructionType.MOVE:
         return Result.ok(Move.apply(instruction, gameData));
-      default:
-        return Result.err(`Unknown instruction of type ${instruction.type}`);
+      case InstructionType.UPDATE:
+        return Result.ok(Update.apply(instruction, gameData));
     }
   } catch (e) {
     console.warn("Error applying instruction", instruction);

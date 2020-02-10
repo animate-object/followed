@@ -23,12 +23,12 @@ export const create = (
 export const next = (
   e: BlindGuardian,
   gameData: GameData.GameData
-): [BlindGuardian, Instruction.Instruction] => {
+): Instruction.Instruction[] => {
   const options = Direction.all().filter(d =>
     Maze.canWalk(gameData.maze, e.position, d)
   );
 
-  const adjacent = options.filter(d => d != Direction.inverse(e.heading));
+  const adjacent = options.filter(d => d !== Direction.inverse(e.heading));
 
   let direction: Direction.Direction;
 
@@ -41,7 +41,7 @@ export const next = (
   }
 
   return [
-    { ...e, heading: direction },
+    Instruction.Update.create({ ...e, heading: direction }),
     Instruction.Move.create(e.id, direction)
   ];
 };

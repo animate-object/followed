@@ -1,4 +1,4 @@
-import { Maze, Cell, Point } from "..";
+import { Maze, Cell, Point, Instruction } from "..";
 import { EntityData, GameData } from ".";
 import { Entity } from "../entities";
 
@@ -41,3 +41,17 @@ export const displayGrid = ({ maze, entityData }: GameData): DisplayGrid =>
     ],
     []
   );
+
+export const generateAllAIInstructions = (
+  gameData: GameData.GameData
+): Instruction.Instruction[] => {
+  const aiEntities = Object.keys(gameData.entityData.entityMap)
+    .map(k => gameData.entityData.entityMap[k])
+    .filter(e => e.type !== "player");
+
+  return aiEntities.reduce(
+    (i: Instruction.Instruction[], e) =>
+      i.concat(Entity.generateAiInstructions(e, gameData)),
+    []
+  );
+};

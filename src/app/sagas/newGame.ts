@@ -1,7 +1,7 @@
 import { RequestNewGame, ActionTypes, startNewGame } from "../actions";
-import { Maze, Point, Dimension, MazeData } from "../types";
+import { Maze, Dimension, MazeData } from "../types";
 import { call, take, put } from "redux-saga/effects";
-import { Api } from "../util";
+import { Api, Arrays, Numbers } from "../util";
 import { Player, BlindGuardian, Entity } from "../types/entities";
 
 export function* newGame() {
@@ -30,9 +30,10 @@ export const startingEntities = (maze: Maze.Maze): Entity.Entity[] => {
     Dimension.pointAlongEdge(maze.dimension)
   );
 
-  const guardian = BlindGuardian.create(Dimension.randomPoint(maze.dimension));
-
+  const guardians = new Array(Numbers.randomInRange(1, 5))
+    .fill(undefined)
+    .map(_ => BlindGuardian.create(Dimension.randomPoint(maze.dimension)));
   console.log(player);
 
-  return [player, guardian];
+  return [player, ...guardians];
 };
