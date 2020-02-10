@@ -40,7 +40,7 @@ export function* stepEngine() {
         yield put(completeStep(step.id, applied.data));
 
         // player collisions POC:
-        yield call(processCollisions, applied.data);
+        yield call(processCollisions, gameData, applied.data);
       }
     } catch (e) {
       console.warn("Error processing step");
@@ -49,14 +49,25 @@ export function* stepEngine() {
   }
 }
 
-export function* processCollisions(gameData: GameData.GameData) {
-  const player =
-    gameData.entityData.entityMap[gameData.entityData.playerEntityId!];
+export function* processCollisions(
+  last: GameData.GameData,
+  next: GameData.GameData
+) {
+  const player = next.entityData.entityMap[next.entityData.playerEntityId!];
   const collisions = EntityData.entitiesAtPoint(
-    gameData.entityData,
+    next.entityData,
     player.position,
-    gameData.maze.dimension
-  ).filter(e => e.id !== player.id);
+    next.maze.dimension
+  )
+    .filter(e => e.id !== player.id)
+    .concat(
+      EntityData.neighborsCrossedByEntity(
+        last.entityData,
+        next.entityData,
+        player.id,
+        next.maze.dimension
+      )
+    );
 
   if (collisions.length === 0) {
     return;

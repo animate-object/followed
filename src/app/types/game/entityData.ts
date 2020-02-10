@@ -79,3 +79,41 @@ export const updateEntity = (
   ...data,
   entityMap: { ...data.entityMap, [updated.id]: updated }
 });
+
+export const entitiesCrossed = (
+  last: EntityData,
+  next: EntityData,
+  a: ID.ID,
+  b: ID.ID
+): boolean => {
+  const lastA = last.entityMap[a];
+  const lastB = last.entityMap[b];
+  const nextA = next.entityMap[a];
+  const nextB = next.entityMap[b];
+
+  return (
+    Point.equals(nextA.position, lastB.position) &&
+    Point.equals(nextB.position, lastA.position)
+  );
+};
+
+export const neighborsCrossedByEntity = (
+  last: EntityData,
+  next: EntityData,
+  e: ID.ID,
+  d: Dimension.Dimension
+): Entity.Entity[] => {
+  const neighborIndices = Point.neighbors(
+    next.entityMap[e].position,
+    d
+  ).map(p => Point.toIndex(p, d));
+
+  const neighborEntities = neighborIndices.reduce(
+    (entities: ID.ID[], idx) => entities.concat(next.positionMap[idx] || []),
+    []
+  );
+
+  return neighborEntities
+    .filter(id => entitiesCrossed(last, next, e, id))
+    .map(id => next.entityMap[id]);
+};

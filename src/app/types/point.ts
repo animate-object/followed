@@ -28,3 +28,11 @@ export const neighbor = (p: Point, d: Direction.Direction): Point => {
       return Point.create(p.x - 1, p.y);
   }
 };
+
+export const neighbors = (p: Point, d: Dimension.Dimension): Point[] =>
+  Direction.all()
+    .map(d => neighbor(p, d))
+    .filter(p => p.x >= 0 && p.y >= 0 && p.x < d.width && p.y < d.height);
+
+export const equals = (a: Point.Point, b: Point.Point): boolean =>
+  a.x === b.x && a.y === b.y;
