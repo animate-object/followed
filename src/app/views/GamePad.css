@@ -1,24 +1,24 @@
 .root {
-  padding-top: 2rem;
+  padding-top: 1rem;
   display: flex;
   flex-direction: column;
-  height: 9em;
-  width: 9em;
+  height: 7.5em;
+  width: 7.5em;
 }
 
 .row {
-  height: 3rem;
-  width: 9em;
+  height: 2.5rem;
+  width: 7.5em;
   display: flex;
 }
 
 .block {
-  height: 3rem;
-  width: 3rem;
+  height: 2.5rem;
+  width: 2.5rem;
 }
 
 .button {
-  background-color: var(--red);
+  background-color: var(--blue);
   padding: 0;
   outline: none;
   box-shadow: none;
@@ -26,5 +26,5 @@
 }
 
 .button:hover {
-  background-color: darkred;
+  background-color: darkblue;
 }
