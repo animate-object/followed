@@ -8,7 +8,8 @@ export interface Exit extends BaseEntity.BaseEntity {
 export const create = (position: Point.Point): Exit => ({
   position,
   id: ID.create(),
-  type: "exit"
+  type: "exit",
+  cls: BaseEntity.EntityClass.INANIMATE
 });
 
 export const DISPLAY = "🚪";

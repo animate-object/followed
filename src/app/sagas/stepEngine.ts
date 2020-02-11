@@ -3,6 +3,8 @@ import { Loadable, Instruction, Result } from "../types";
 import { GameData, EntityData } from "../types/game";
 import { select, put, take, call } from "redux-saga/effects";
 import { getGame } from "../selectors";
+import { EntityClass } from "../types/entities/baseEntity";
+import { Entity } from "../types/entities";
 
 export function* stepEngine() {
   while (true) {
@@ -69,10 +71,16 @@ export function* processCollisions(
       )
     );
 
+  const hostile = collisions.find(e => e.cls === EntityClass.HOSTILE);
   if (collisions.length === 0) {
     return;
-  } else if (collisions.find(e => e.type === "blind-guardian")) {
-    yield call(window.confirm, `${player.name} has been annihilated.`);
+  } else if (hostile) {
+    yield call(
+      window.confirm,
+      `${player.name} has been annihilated by ${Entity.getDescription(
+        hostile
+      )}.`
+    );
     window.location.reload();
   } else if (collisions.find(e => e.type === "exit")) {
     yield call(window.confirm, `${player.name} escaped. . . this time.`);

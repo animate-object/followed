@@ -1,3 +1,5 @@
+import { Arrays } from "../util";
+
 export enum Direction {
   NORTH = "NORTH",
   SOUTH = "SOUTH",
@@ -24,3 +26,5 @@ export const inverse = (d: Direction): Direction => {
       return Direction.EAST;
   }
 };
+
+export const random = (): Direction => Arrays.randomItem(all());

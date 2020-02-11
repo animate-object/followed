@@ -1,8 +1,14 @@
 import { RequestNewGame, ActionTypes, startNewGame } from "../actions";
 import { Maze, Dimension, MazeData, Maybe } from "../types";
 import { call, take, put } from "redux-saga/effects";
-import { Api, Numbers } from "../util";
-import { Player, BlindGuardian, Entity, Exit } from "../types/entities";
+import { Api, Numbers, Arrays } from "../util";
+import {
+  Player,
+  BlindGuardian,
+  Entity,
+  Exit,
+  WanderingHusk
+} from "../types/entities";
 
 const name = Maybe.withDefault(Maybe.of(localStorage.getItem("name")), () => {
   let n = window.prompt("What is your name?") || "";
@@ -35,9 +41,14 @@ export function* newGame() {
 export const startingEntities = ({ dimension }: Maze.Maze): Entity.Entity[] => {
   const player = Player.create(name, Dimension.pointAlongEdge(dimension));
   const exit = Exit.create(Dimension.randomPoint(dimension));
-  const guardians = new Array(Numbers.randomInRange(2, 8))
+  const guardians = new Array(Numbers.randomInRange(1, 5))
     .fill(undefined)
     .map(_ => BlindGuardian.create(Dimension.randomPoint(dimension)));
+  const husks = new Array(Arrays.randomItem([1, 1, 2, 2, 3]))
+    .fill(undefined)
+    .map(_ => WanderingHusk.create(Dimension.randomPoint(dimension)));
 
-  return [player, exit, ...guardians];
+  const enemies = [...guardians, ...husks];
+  console.log(enemies);
+  return [player, exit, ...enemies];
 };

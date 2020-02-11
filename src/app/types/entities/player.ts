@@ -20,7 +20,8 @@ export const create = (
   position,
   type: "player",
   visionRadius,
-  displayName: displayName || name
+  displayName: displayName || name,
+  cls: BaseEntity.EntityClass.PLAYER
 });
 
 export const randomDisplayName = (): string =>

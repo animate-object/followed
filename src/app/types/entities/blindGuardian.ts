@@ -17,7 +17,8 @@ export const create = (
   type: "blind-guardian",
   position,
   id: ID.create(),
-  heading: Direction.Direction.NORTH
+  heading: Direction.Direction.NORTH,
+  cls: BaseEntity.EntityClass.HOSTILE
 });
 
 export const next = (
