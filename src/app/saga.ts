@@ -4,6 +4,7 @@ import { requestNewGame } from "./actions";
 import { stepEngine } from "./sagas/stepEngine";
 import { movePlayer } from "./sagas/movePlayer";
 import { newGame } from "./sagas/newGame";
+import { Arrays } from "./util";
 
 const sagas = [newGame, stepEngine, movePlayer];
 
@@ -13,7 +14,13 @@ export function* root() {
     requestNewGame({
       mazeOptions: {
         dimension: Dimension.create(15, 15),
-        algorithm: "aldous-broder"
+        algorithm: Arrays.randomItem([
+          "aldous-broder",
+          "aldous-broder",
+          "aldous-broder",
+          "binary-tree",
+          "side-winder"
+        ])
       }
     })
   );
