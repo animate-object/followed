@@ -28,3 +28,11 @@
 .button:hover {
   background-color: darkblue;
 }
+
+.wait {
+  background-color: goldenrod;
+}
+
+.wait:hover {
+  background-color: darkgoldenrod;
+}

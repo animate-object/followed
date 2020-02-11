@@ -7,5 +7,6 @@ export interface BaseInstruction {
 
 export enum InstructionType {
   MOVE = "MOVE",
-  UPDATE = "UPDATE"
+  UPDATE = "UPDATE",
+  WAIT = "WAIT"
 }

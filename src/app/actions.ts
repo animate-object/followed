@@ -45,7 +45,7 @@ export interface CompleteStep {
 
 export interface MovePlayer {
   type: ActionTypes.MOVE_PLAYER;
-  direction: Direction.Direction;
+  direction?: Direction.Direction;
 }
 
 export type AppAction =
@@ -88,7 +88,7 @@ export const completeStep = (
   gameData
 });
 
-export const movePlayer = (direction: Direction.Direction): MovePlayer => ({
+export const movePlayer = (direction?: Direction.Direction): MovePlayer => ({
   type: ActionTypes.MOVE_PLAYER,
   direction
 });

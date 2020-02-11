@@ -4,7 +4,7 @@ import styles from "./GamePad.css";
 import classNames from "classnames";
 
 interface DispatchProps {
-  onMove: Effect.Effect1<Direction.Direction>;
+  onMove: Effect.Effect1<Direction.Direction | undefined>;
 }
 
 type Props = DispatchProps;
@@ -24,7 +24,10 @@ export const GamePad = ({ onMove }: Props): JSX.Element => (
         className={classNames(styles.block, styles.button)}
         onClick={() => onMove(Direction.Direction.WEST)}
       ></button>
-      <div className={styles.block}></div>
+      <button
+        className={classNames(styles.block, styles.button, styles.wait)}
+        onClick={() => onMove(undefined)}
+      ></button>
       <button
         className={classNames(styles.block, styles.button)}
         onClick={() => onMove(Direction.Direction.EAST)}

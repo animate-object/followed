@@ -7,7 +7,7 @@ import { Camera } from "../util";
 
 interface Props {
   grid: Camera.WindowedGrid;
-  onMove: Effect.Effect1<Direction.Direction>;
+  onMove: Effect.Effect1<Direction.Direction | undefined>;
   processingUpdates: boolean;
 }
 

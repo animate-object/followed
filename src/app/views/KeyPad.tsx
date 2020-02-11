@@ -2,7 +2,7 @@ import * as React from "react";
 import { Effect, Direction } from "../types";
 
 interface Props {
-  onMove: Effect.Effect1<Direction.Direction>;
+  onMove: Effect.Effect1<Direction.Direction | undefined>;
   disabled: boolean;
 }
 
@@ -29,6 +29,8 @@ export class KeyPad extends React.PureComponent<Props> {
         this.props.onMove(Direction.Direction.SOUTH);
       } else if (event.key === "ArrowLeft" || event.key === "a") {
         this.props.onMove(Direction.Direction.WEST);
+      } else if (event.key === " ") {
+        this.props.onMove(undefined);
       }
     }
   };

@@ -9,7 +9,7 @@ export interface MoveInstruction extends BaseInstruction {
   };
 }
 
-export const create = (
+export const move = (
   entityId: ID.ID,
   direction: Direction.Direction
 ): MoveInstruction => ({

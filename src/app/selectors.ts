@@ -26,6 +26,8 @@ export const getPlayer = createSelector(getGame, game =>
     : undefined
 );
 
+const USE_WINDOW = true;
+
 export const getWindowedDisplayGrid = createSelector(
   getDisplayGrid,
   getPlayer,

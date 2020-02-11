@@ -9,7 +9,7 @@ export interface UpdateInstruction extends BaseInstruction {
   };
 }
 
-export const create = (updated: Entity.Entity): UpdateInstruction => ({
+export const update = (updated: Entity.Entity): UpdateInstruction => ({
   type: InstructionType.UPDATE,
   entityId: updated.id,
   payload: { updated }

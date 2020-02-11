@@ -14,7 +14,7 @@ interface StateProps {
 }
 
 interface DispatchProps {
-  onMove: Effect.Effect1<Direction.Direction>;
+  onMove: Effect.Effect1<Direction.Direction | undefined>;
 }
 
 type Props = StateProps & DispatchProps;

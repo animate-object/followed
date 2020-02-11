@@ -12,7 +12,11 @@ export function* movePlayer() {
     if (!isProcessing && !!player) {
       yield put(
         requestStep(
-          Step.create(Instruction.Move.create(player.id, action.direction))
+          Step.create(
+            action.direction
+              ? Instruction.move(player.id, action.direction)
+              : Instruction.wait(player.id)
+          )
         )
       );
     }
