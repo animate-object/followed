@@ -1,7 +1,7 @@
-import { DisplayGrid, CellAndOccupants } from "../types/game/gameData";
+import { DisplayGrid, CellAndMeta } from "../types/game/gameData";
 import { Point, Maybe } from "../types";
 
-export type WindowedGrid = Array<Array<Maybe.Maybe<CellAndOccupants>>>;
+export type WindowedGrid = Array<Array<Maybe.Maybe<CellAndMeta>>>;
 
 export const centerOnPoint = (
   grid: DisplayGrid,

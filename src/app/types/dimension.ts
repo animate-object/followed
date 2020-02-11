@@ -32,3 +32,6 @@ export const pointAlongEdge = (d: Dimension): Point.Point => {
       : d.height - 1
   );
 };
+
+export const inBounds = (d: Dimension, p: Point.Point): boolean =>
+  p.x > 0 && p.y > 0 && p.x < d.width && p.y < d.height;

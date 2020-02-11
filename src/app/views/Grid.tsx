@@ -16,12 +16,10 @@ export const Grid = ({ grid }: Props): JSX.Element => {
           {row.map((maybeCell, idx) =>
             Maybe.withDefault(
               Maybe.map(
-                cell => (
-                  <Cell key={idx} cell={cell.cell} occupants={cell.occupants} />
-                ),
+                cell => <Cell key={idx} cell={cell.cell} meta={cell.meta} />,
                 maybeCell
               ),
-              <EmptyCell />
+              <EmptyCell key={idx} />
             )
           )}
         </div>

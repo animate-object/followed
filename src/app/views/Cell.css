@@ -12,3 +12,15 @@
 .empty {
   background-color: var(--light-blue);
 }
+
+.seen {
+  background-color: var(--light-gray);
+}
+
+.visible {
+  background-color: var(--white);
+}
+
+.unknown {
+  background-color: var(--light-blue);
+}

@@ -1,5 +1,5 @@
 import { ID, Dimension, Point, Maybe } from "..";
-import { Entity } from "../entities";
+import { Entity, Player } from "../entities";
 
 export interface EntityData {
   entityMap: Record<ID.ID, Entity.Entity>;
@@ -43,6 +43,9 @@ export const entitiesAtPoint = (
   const ids = data.positionMap[idx] || [];
   return ids.map(id => data.entityMap[id]);
 };
+
+export const getPlayer = (data: EntityData): Maybe.Maybe<Player.Player> =>
+  Maybe.map(id => data.entityMap[id] as Player.Player, data.playerEntityId);
 
 export const moveEntity = (
   id: ID.ID,

@@ -5,39 +5,72 @@ import { Entity } from "../entities";
 export interface GameData {
   maze: Maze.Maze;
   entityData: EntityData.EntityData;
+  seen: Set<number>;
+  sees: Set<number>;
 }
 
 export const create = (
   maze: Maze.Maze,
   entityData: EntityData.EntityData
-): GameData => ({
-  maze,
-  entityData
-});
+): GameData => {
+  const player = EntityData.getPlayer(entityData);
+  const sees = new Set<number>(
+    player
+      ? Maze.seenFromPoint(maze, player.position, player.visionRadius).map(p =>
+          Point.toIndex(p, maze.dimension)
+        )
+      : []
+  );
 
-export interface CellAndOccupants {
-  cell: Cell.Cell;
+  return {
+    maze,
+    entityData,
+    seen: new Set(),
+    sees
+  };
+};
+
+export interface CellMeta {
   occupants: Entity.Entity[];
+  visible: boolean;
+  seen: boolean;
+  unknown: boolean;
 }
 
-export type DisplayGrid = Array<Array<CellAndOccupants>>;
+export interface CellAndMeta {
+  cell: Cell.Cell;
+  meta: CellMeta;
+}
 
-export const displayGrid = ({ maze, entityData }: GameData): DisplayGrid =>
+export type DisplayGrid = CellAndMeta[][];
+
+export const displayGrid = ({
+  maze,
+  entityData,
+  seen,
+  sees
+}: GameData): DisplayGrid =>
   maze.grid.reduce(
-    (rows: CellAndOccupants[][], row, rowIdx) => [
+    (rows: CellAndMeta[][], row, rowIdx) => [
       ...rows,
-      row.reduce(
-        (cells: CellAndOccupants[], cell, cellIdx) =>
-          cells.concat({
-            cell,
+      row.reduce((cells: CellAndMeta[], cell, cellIdx) => {
+        const p = Point.create(cellIdx, rowIdx);
+        const isSeen = seen.has(Point.toIndex(p, maze.dimension));
+        const isVisible = sees.has(Point.toIndex(p, maze.dimension));
+        return cells.concat({
+          cell,
+          meta: {
             occupants: EntityData.entitiesAtPoint(
               entityData,
               Point.create(cellIdx, rowIdx),
               maze.dimension
-            )
-          }),
-        []
-      )
+            ),
+            visible: isVisible,
+            seen: isSeen,
+            unknown: !isVisible && !isSeen
+          }
+        });
+      }, [])
     ],
     []
   );

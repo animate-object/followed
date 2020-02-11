@@ -10,3 +10,5 @@ export const create = (position: Point.Point): Exit => ({
   id: ID.create(),
   type: "exit"
 });
+
+export const DISPLAY = "🚪";
