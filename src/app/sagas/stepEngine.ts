@@ -53,7 +53,7 @@ export function* processCollisions(
   last: GameData.GameData,
   next: GameData.GameData
 ) {
-  const player = next.entityData.entityMap[next.entityData.playerEntityId!];
+  const player = EntityData.getPlayer(next.entityData)!;
   const collisions = EntityData.entitiesAtPoint(
     next.entityData,
     player.position,
@@ -75,7 +75,7 @@ export function* processCollisions(
     yield call(window.confirm, "You've been annihilated.");
     window.location.reload();
   } else if (collisions.find(e => e.type === "exit")) {
-    yield call(window.confirm, "You have escaped with your life. . . for now.");
+    yield call(window.confirm, `${player.name} escaped. . . this time.`);
     window.location.reload();
   }
 }
