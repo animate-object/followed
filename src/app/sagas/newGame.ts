@@ -1,4 +1,9 @@
-import { RequestNewGame, ActionTypes, startNewGame } from "../actions";
+import {
+  RequestNewGame,
+  ActionTypes,
+  startNewGame,
+  requestNewGame
+} from "../actions";
 import { Maze, Dimension, MazeData, Maybe } from "../types";
 import { call, take, put } from "redux-saga/effects";
 import { Api, Numbers, Arrays } from "../util";
@@ -17,6 +22,33 @@ const name = Maybe.withDefault(Maybe.of(localStorage.getItem("name")), () => {
   }
   return n !== "" ? n : "?";
 });
+
+export function* firstGame() {
+  yield put(
+    requestNewGame({
+      mazeOptions: {
+        dimension: Arrays.randomItem([
+          Dimension.create(10, 10),
+          Dimension.create(15, 15),
+          Dimension.create(15, 15),
+          Dimension.create(15, 15),
+          Dimension.create(15, 15),
+          Dimension.create(20, 20),
+          Dimension.create(25, 15),
+          Dimension.create(15, 20),
+          Dimension.create(30, 5)
+        ]),
+        algorithm: Arrays.randomItem([
+          "aldous-broder",
+          "aldous-broder",
+          "aldous-broder",
+          "binary-tree",
+          "side-winder"
+        ])
+      }
+    })
+  );
+}
 
 export function* newGame() {
   while (true) {
@@ -49,6 +81,5 @@ export const startingEntities = ({ dimension }: Maze.Maze): Entity.Entity[] => {
     .map(_ => WanderingHusk.create(Dimension.randomPoint(dimension)));
 
   const enemies = [...guardians, ...husks];
-  console.log(enemies);
   return [player, exit, ...enemies];
 };

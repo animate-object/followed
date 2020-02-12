@@ -13,7 +13,7 @@ export const toIndex = (
 ): number => y * width + x;
 
 export const fromIndex = (idx: number, { width }: Dimension.Dimension): Point =>
-  create(Math.floor(idx / width), idx % width);
+  create(idx % width, Math.floor(idx / width));
 
 export const neighbor = (p: Point, d: Direction.Direction): Point => {
   switch (d) {

@@ -37,12 +37,24 @@ export const next = (
     undefined
   );
 
-  const heading = towardPlayer != null ? towardPlayer : wander(e, gameData);
+  const instructions = [];
+  let heading: Direction.Direction;
+  if (towardPlayer) {
+    if (Math.random() < 0.9) {
+      heading = towardPlayer;
 
-  return [
-    Instruction.update({ ...e, heading }),
-    Instruction.move(e.id, heading)
-  ];
+      instructions.push(Instruction.move(e.id, heading));
+    } else {
+      heading = e.heading;
+      instructions.push(Instruction.wait(e.id));
+    }
+  } else {
+    heading = wander(e, gameData);
+
+    instructions.push(Instruction.move(e.id, heading));
+  }
+
+  return [Instruction.update({ ...e, heading }), ...instructions];
 };
 
 export const wander = (

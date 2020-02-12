@@ -5,11 +5,16 @@ import { Dimension, Point, Direction, Maybe } from ".";
 export interface Maze {
   readonly grid: Grid;
   readonly dimension: Dimension.Dimension;
+  readonly algorithm: string;
 }
 
 export type Grid = Array<Array<Cell.Cell>>;
 
-export const fromMazeData = ({ dimension, bytes }: MazeData.MazeData): Maze => {
+export const fromMazeData = ({
+  dimension,
+  bytes,
+  algorithm
+}: MazeData.MazeData): Maze => {
   const grid: Grid = [];
   for (let r = 0; r < dimension.height; r++) {
     const row = [];
@@ -21,7 +26,8 @@ export const fromMazeData = ({ dimension, bytes }: MazeData.MazeData): Maze => {
 
   return {
     grid,
-    dimension
+    dimension,
+    algorithm
   };
 };
 

@@ -7,6 +7,7 @@ export interface GameData {
   entityData: EntityData.EntityData;
   seen: Set<number>;
   sees: Set<number>;
+  stepCount: number;
 }
 
 export const create = (
@@ -26,7 +27,8 @@ export const create = (
     maze,
     entityData,
     seen: new Set(),
-    sees
+    sees,
+    stepCount: 0
   };
 };
 

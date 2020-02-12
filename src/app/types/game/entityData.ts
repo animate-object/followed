@@ -28,7 +28,7 @@ export const fromEntities = (
   typeMap: entities.reduce(
     (m: Record<string, ID.ID[]>, e) => ({
       ...m,
-      [e.type]: m[e.id] ? [...m[e.id], e.id] : [e.id]
+      [e.type]: m[e.type] ? [...m[e.type], e.id] : [e.id]
     }),
     {}
   )

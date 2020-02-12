@@ -14,5 +14,5 @@ export const maze = ({
   });
   return request
     .then(response => response.text())
-    .then(base64 => MazeData.fromApi(dimension, base64));
+    .then(base64 => MazeData.fromApi(dimension, algorithm, base64));
 };

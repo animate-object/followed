@@ -59,7 +59,11 @@ export const completeStep = (state: State, stepId: ID.ID): State =>
       state.stepId === stepId
         ? {
             ...state,
-            stepId: undefined
+            stepId: undefined,
+            game: Loadable.map(
+              g => ({ ...g, stepCount: g.stepCount + 1 }),
+              state.game
+            )
           }
         : state,
     state

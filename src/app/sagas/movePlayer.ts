@@ -6,8 +6,8 @@ import { Step, Instruction } from "../types";
 
 export function* movePlayer() {
   yield takeEvery(ActionTypes.MOVE_PLAYER, function*(action: MovePlayer) {
-    const player: Player.Player = yield select(getPlayer);
-    const isProcessing: boolean = yield select(getIsProcessingStep);
+    const player = (yield select(getPlayer)) as Player.Player;
+    const isProcessing = (yield select(getIsProcessingStep)) as boolean;
 
     if (!isProcessing && !!player) {
       yield put(

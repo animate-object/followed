@@ -7,6 +7,7 @@ import { getIsProcessingStep, getWindowedDisplayGrid } from "../selectors";
 import { Game } from "./Game";
 import { AppAction, movePlayer } from "../actions";
 import { WindowedGrid } from "../util/camera";
+import InfoButton from "./InfoButton";
 
 interface StateProps {
   grid: Loadable.Loadable<WindowedGrid>;
@@ -24,11 +25,14 @@ const App = ({ grid, processingUpdates, onMove }: Props) => {
     <div className={styles.root}>
       {Loadable.isLoading(grid) && <span>Loading . . . </span>}
       {Loadable.isLoaded(grid) && grid.data && (
-        <Game
-          processingUpdates={processingUpdates}
-          grid={grid.data}
-          onMove={onMove}
-        />
+        <>
+          <InfoButton />
+          <Game
+            processingUpdates={processingUpdates}
+            grid={grid.data}
+            onMove={onMove}
+          />
+        </>
       )}
     </div>
   );
