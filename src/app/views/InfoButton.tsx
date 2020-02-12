@@ -23,9 +23,10 @@ interface Props {
 }
 
 const getEntityCountData = (entityData: EntityData.EntityData): string =>
+  "\n\t" +
   Object.keys(entityData.typeMap)
     .map(type_ => `${type_}: ${entityData.typeMap[type_].length}`)
-    .join(", ");
+    .join("\n\t");
 
 const gameInfo = (gameData: GameData.GameData): string =>
   [
