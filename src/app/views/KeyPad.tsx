@@ -29,7 +29,7 @@ export class KeyPad extends React.PureComponent<Props> {
         this.props.onMove(Direction.Direction.SOUTH);
       } else if (event.key === "ArrowLeft" || event.key === "a") {
         this.props.onMove(Direction.Direction.WEST);
-      } else if (event.key === " ") {
+      } else if (event.key === " " || event.key === "Enter") {
         this.props.onMove(undefined);
       }
     }

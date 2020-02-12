@@ -9,9 +9,11 @@ export const reducer = (
     case ActionTypes.REQUEST_STEP:
       return State.requestStep(state, action.step.id);
     case ActionTypes.COMPLETE_STEP:
-      return State.completeStep(state, action.stepId, action.gameData);
+      return State.completeStep(state, action.stepId);
     case ActionTypes.ABORT_STEP:
-      return State.abortSTep(state, action.stepId);
+      return State.abortStep(state, action.stepId);
+    case ActionTypes.PROCESS_STEP:
+      return State.processStep(state, action.stepId, action.gameData);
     case ActionTypes.START_NEW_GAME:
       return State.newGame(state, action.maze, action.entities);
     case ActionTypes.REQUEST_NEW_GAME:

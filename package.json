@@ -6,6 +6,7 @@
   "dependencies": {
     "@babel/core": "7.8.4",
     "@svgr/webpack": "4.3.3",
+    "@types/antd": "^1.0.0",
     "@types/uuid": "^3.4.7",
     "@typescript-eslint/eslint-plugin": "^2.10.0",
     "@typescript-eslint/parser": "^2.10.0",

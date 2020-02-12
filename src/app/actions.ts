@@ -7,6 +7,7 @@ export enum ActionTypes {
   START_NEW_GAME = "START_NEW_GAME",
 
   REQUEST_STEP = "REQUEST_STEP",
+  PROCESS_STEP = "PROCESS_STEP",
   COMPLETE_STEP = "COMPLETE_STEP",
   ABORT_STEP = "ABORT_STEP",
 
@@ -37,10 +38,15 @@ export interface AbortStep {
   stepId: ID.ID;
 }
 
+export interface ProcessStep {
+  type: ActionTypes.PROCESS_STEP;
+  stepId: ID.ID;
+  gameData: GameData.GameData;
+}
+
 export interface CompleteStep {
   type: ActionTypes.COMPLETE_STEP;
   stepId: ID.ID;
-  gameData: GameData.GameData;
 }
 
 export interface MovePlayer {
@@ -54,6 +60,7 @@ export type AppAction =
   | RequestStep
   | AbortStep
   | CompleteStep
+  | ProcessStep
   | MovePlayer;
 
 export const requestNewGame = (
@@ -79,13 +86,18 @@ export const abortStep = (stepId: ID.ID): AbortStep => ({
   stepId
 });
 
-export const completeStep = (
+export const processStep = (
   stepId: ID.ID,
   gameData: GameData.GameData
-): CompleteStep => ({
-  type: ActionTypes.COMPLETE_STEP,
+): ProcessStep => ({
+  type: ActionTypes.PROCESS_STEP,
   stepId,
   gameData
+});
+
+export const completeStep = (stepId: ID.ID): CompleteStep => ({
+  type: ActionTypes.COMPLETE_STEP,
+  stepId
 });
 
 export const movePlayer = (direction?: Direction.Direction): MovePlayer => ({

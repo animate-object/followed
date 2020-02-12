@@ -1,4 +1,10 @@
-import { RequestStep, abortStep, completeStep, ActionTypes } from "../actions";
+import {
+  RequestStep,
+  abortStep,
+  completeStep,
+  ActionTypes,
+  processStep
+} from "../actions";
 import { Loadable, Instruction, Result, Maybe } from "../types";
 import { GameData, EntityData } from "../types/game";
 import { select, put, take, call } from "redux-saga/effects";
@@ -40,10 +46,12 @@ export function* stepEngine() {
           continue;
         }
 
-        yield put(completeStep(step.id, applied.data));
+        yield put(processStep(step.id, applied.data));
 
         // player collisions POC:
         yield call(processCollisions, gameData, applied.data);
+
+        yield put(completeStep(step.id));
       }
     } catch (e) {
       console.warn("Error processing step");

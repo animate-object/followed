@@ -37,7 +37,7 @@ export const requestStep = (state: State, stepId: ID.ID): State => ({
   stepId
 });
 
-export const completeStep = (
+export const processStep = (
   state: State,
   stepId: ID.ID,
   gameData: GameData.GameData
@@ -47,12 +47,23 @@ export const completeStep = (
       state.stepId === stepId
         ? {
             ...state,
-            stepId: undefined,
             game: Loadable.loaded(gameData)
           }
         : state,
     state
   );
 
-export const abortSTep = (state: State, stepId: ID.ID) =>
+export const completeStep = (state: State, stepId: ID.ID): State =>
+  ifGameIsLoaded(
+    () =>
+      state.stepId === stepId
+        ? {
+            ...state,
+            stepId: undefined
+          }
+        : state,
+    state
+  );
+
+export const abortStep = (state: State, stepId: ID.ID) =>
   state.stepId === stepId ? { ...state, stepId: undefined } : state;

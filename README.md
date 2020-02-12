@@ -32,12 +32,20 @@ Some enemies might say things too . . .
 
 Seems like a no brainer. Not everything in the maze should kill you.
 
-Ideas
+Easy
+
+- a stone of knowledge -- exit becomes visible if in view, even if around walls
+
+Medium
+
+- a compass -- directs player toward exit
+- orb of sensing -- enemy squares are always visible
+- temporary speed boost -- for escaping
+
+Hard
 
 - a map -- allows pulling up a minimap of explored areas
-- a compass -- directs player toward exit
 - temporary wall -- for escaping
-- temporary speed boost -- for escaping
 - phase boots -- to phase through walls -- for escaping
 
 ### More Enemies
