@@ -14,9 +14,12 @@ const DEV =
 
 let VERSION: Maybe.Maybe<string>;
 
-fetch(`${window.location.href}/VERSION`).then(d =>
-  d.text().then(version => (VERSION = version))
-);
+fetch(
+  `${window.location.href.substring(
+    0,
+    window.location.href.indexOf("?")
+  )}/VERSION`
+).then(d => d.text().then(version => (VERSION = version)));
 
 interface Props {
   gameData: Loadable.Loadable<GameData.GameData>;
