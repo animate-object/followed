@@ -12,6 +12,12 @@ const DEV =
     return !!queryParam && queryParam !== "false" ? "true" : undefined;
   }) === "true";
 
+let VERSION: Maybe.Maybe<string>;
+
+fetch(`${window.location.href}/VERSION`).then(d =>
+  d.text().then(version => (VERSION = version))
+);
+
 interface Props {
   gameData: Loadable.Loadable<GameData.GameData>;
 }
@@ -26,7 +32,8 @@ const gameInfo = (gameData: GameData.GameData): string =>
     `maze algorithm:: ${gameData.maze.algorithm}`,
     `maze dimensions:: ${gameData.maze.dimension.width} x ${gameData.maze.dimension.height}`,
     `entityCount:: ${getEntityCountData(gameData.entityData)}`,
-    `step:: ${gameData.stepCount}`
+    `step:: ${gameData.stepCount}`,
+    `version:: ${VERSION}`
   ].join("\n");
 
 export const InfoButton = ({ gameData }: Props): JSX.Element =>

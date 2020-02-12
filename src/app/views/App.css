@@ -1,8 +1,10 @@
 .root {
   height: 100%;
   width: 100%;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
+  padding-bottom: 3rem;
 }

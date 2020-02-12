@@ -23,6 +23,7 @@ const modules = require("./modules");
 const getClientEnvironment = require("./env");
 const ModuleNotFoundPlugin = require("react-dev-utils/ModuleNotFoundPlugin");
 const ForkTsCheckerWebpackPlugin = require("react-dev-utils/ForkTsCheckerWebpackPlugin");
+const GitRevisionPlugin = require("git-revision-webpack-plugin");
 const typescriptFormatter = require("react-dev-utils/typescriptFormatter");
 
 const postcssNormalize = require("postcss-normalize");
@@ -628,6 +629,7 @@ module.exports = function(webpackEnv) {
             new RegExp("/[^/?]+\\.[^/]+$")
           ]
         }),
+      new GitRevisionPlugin(),
       // TypeScript type checking
       useTypeScript &&
         new ForkTsCheckerWebpackPlugin({

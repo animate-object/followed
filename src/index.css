@@ -2,15 +2,19 @@
 :root {
   --light-gray: #ababb1;
   --light-red: #fb5454;
-  --light-blue: #b0beec;
-  --light-green: #6fe96f;
+  --light-blue: #6b7bb1;
+  --light-green: #47ca47;
 
   --gray: #4d4d4d;
   --red: #ad1717;
   --blue: #262690;
   --green: #00641e;
 
-  --white: #e9e9e9;
+  --white: #a3a3a3;
+}
+
+:root {
+  --background: #111111;
 }
 
 .app {
@@ -20,5 +24,5 @@
   top: 0;
   left: 0;
 
-  background-color: var(--light-blue);
+  background-color: var(--background);
 }

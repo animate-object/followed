@@ -2,37 +2,39 @@
   padding-top: 1rem;
   display: flex;
   flex-direction: column;
-  height: 7.5em;
-  width: 7.5em;
+  height: 9rem;
+  width: 9rem;
 }
 
 .row {
-  height: 2.5rem;
-  width: 7.5em;
+  height: 3rem;
+  width: 9rem;
   display: flex;
 }
 
 .block {
-  height: 2.5rem;
-  width: 2.5rem;
+  height: 3rem;
+  width: 3rem;
 }
 
 .button {
-  background-color: var(--blue);
+  background-color: var(--light-green);
   padding: 0;
   outline: none;
+  border-radius: 8px;
+
   box-shadow: none;
   box-sizing: border-box;
 }
 
 .button:hover {
-  background-color: darkblue;
+  background-color: var(--green);
 }
 
 .wait {
-  background-color: goldenrod;
+  background-color: var(--light-blue);
 }
 
 .wait:hover {
-  background-color: darkgoldenrod;
+  background-color: var(--blue);
 }

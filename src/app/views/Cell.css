@@ -10,17 +10,17 @@
 }
 
 .empty {
-  background-color: var(--light-blue);
+  background-color: var(--background);
 }
 
 .seen {
-  background-color: var(--light-gray);
+  background-color: #202020;
 }
 
 .visible {
-  background-color: var(--white);
+  background-color: #444444;
 }
 
 .unknown {
-  background-color: var(--light-blue);
+  background-color: var(--background);
 }
