@@ -83,7 +83,7 @@ export const generateAllAIInstructions = (
   gameData: GameData.GameData
 ): Instruction.Instruction[] => {
   const aiEntities = Object.keys(gameData.entityData.entityMap)
-    .map(k => gameData.entityData.entityMap[k])
+    .map(k => EntityData.byId(gameData.entityData, k))
     .filter(e => e.type !== "player");
 
   return aiEntities.reduce(

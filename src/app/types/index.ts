@@ -12,6 +12,8 @@ import * as Direction from "./direction";
 import * as Result from "./result";
 import * as Effect from "./effect";
 import * as Maybe from "./maybe";
+import * as Phenomenon from "./phenomenon";
+import * as Outcome from "./outcome";
 
 export {
   Dimension,
@@ -27,5 +29,7 @@ export {
   Direction,
   Result,
   Effect,
-  Maybe
+  Maybe,
+  Phenomenon,
+  Outcome
 };

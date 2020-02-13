@@ -7,6 +7,7 @@ export interface Player extends BaseEntity.BaseEntity {
   name: string;
   visionRadius: number;
   displayName: string;
+  cls: BaseEntity.EntityClass.PLAYER;
 }
 
 export const create = (

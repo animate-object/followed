@@ -1,13 +1,14 @@
-import { GameData } from "../game";
-import { Instruction } from "..";
-import { BlindGuardian, Player, Exit, WanderingHusk } from ".";
-import { EntityData } from "../game/entityData";
+import { GameData, GameState } from "../game";
+import { Instruction, Outcome } from "..";
+import { BlindGuardian, Player, Exit, WanderingHusk, Entity } from ".";
+import { EntityClass } from "./baseEntity";
+import { Items, OrbOfKnowing } from "./items";
 
-export type HostileEntity =
+export type HostileEntities =
   | BlindGuardian.BlindGuardian
   | WanderingHusk.WanderingHusk;
 
-export type Entity = Player.Player | Exit.Exit | HostileEntity;
+export type Entity = Player.Player | Exit.Exit | HostileEntities | Items;
 
 export const getColor = (e: Entity): string => {
   switch (e.type) {
@@ -26,6 +27,8 @@ export const getDisplayName = (e: Entity): string => {
       return Exit.DISPLAY;
     case "wandering-husk":
       return WanderingHusk.DISPLAY;
+    case "orb-of-knowing":
+      return OrbOfKnowing.DISPLAY;
   }
 };
 
@@ -39,6 +42,8 @@ export const getDescription = (e: Entity): string => {
       return "an exit";
     case "wandering-husk":
       return "a wandering husk";
+    case "orb-of-knowing":
+      return "a mysterious, translucent orb";
   }
 };
 
@@ -53,6 +58,23 @@ export const generateAiInstructions = (
       return WanderingHusk.next(e, gameData);
     default:
       return [];
+  }
+};
+
+export const onCollideWithPlayer = (
+  e: Entity,
+  gameData: GameData.GameData
+): Outcome.Outcome => {
+  if (e.cls === EntityClass.HOSTILE) {
+    return Outcome.create([
+      Instruction.updateGameState(GameState.lose({ entityId: e.id }))
+    ]);
+  } else if (e.cls === EntityClass.ITEM) {
+    return Outcome.create(undefined, [e.phenomena]);
+  } else if (e.type === "exit") {
+    return Outcome.create([Instruction.updateGameState(GameState.win())]);
+  } else {
+    return Outcome.create();
   }
 };
 

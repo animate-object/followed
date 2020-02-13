@@ -3,7 +3,8 @@ import { ID, Point } from "..";
 export enum EntityClass {
   PLAYER = "PLAYER",
   INANIMATE = "INANIMATE",
-  HOSTILE = "HOSTILE"
+  HOSTILE = "HOSTILE",
+  ITEM = "ITEM"
 }
 
 export interface BaseEntity {
@@ -11,4 +12,8 @@ export interface BaseEntity {
   id: ID.ID;
   type: string;
   cls: EntityClass;
+}
+
+export interface HostileEntity extends BaseEntity {
+  cls: EntityClass.HOSTILE;
 }

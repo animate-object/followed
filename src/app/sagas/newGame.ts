@@ -14,6 +14,7 @@ import {
   Exit,
   WanderingHusk
 } from "../types/entities";
+import { OrbOfKnowing } from "../types/entities/items";
 
 const name = Maybe.withDefault(Maybe.of(localStorage.getItem("name")), () => {
   let n = window.prompt("What is your name?") || "";
@@ -34,9 +35,12 @@ export function* firstGame() {
           Dimension.create(15, 15),
           Dimension.create(15, 15),
           Dimension.create(20, 20),
-          Dimension.create(25, 15),
+          Dimension.create(25, 10),
+          Dimension.create(10, 25),
+          Dimension.create(20, 15),
           Dimension.create(15, 20),
-          Dimension.create(30, 5)
+          Dimension.create(30, 5),
+          Dimension.create(5, 30)
         ]),
         algorithm: Arrays.randomItem([
           "aldous-broder",
@@ -81,5 +85,10 @@ export const startingEntities = ({ dimension }: Maze.Maze): Entity.Entity[] => {
     .map(_ => WanderingHusk.create(Dimension.randomPoint(dimension)));
 
   const enemies = [...guardians, ...husks];
-  return [player, exit, ...enemies];
+  return [
+    player,
+    exit,
+    ...enemies,
+    OrbOfKnowing.create(Dimension.randomPoint(dimension))
+  ];
 };

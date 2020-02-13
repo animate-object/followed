@@ -1,4 +1,4 @@
-import { Arrays } from "../util";
+import * as Arrays from "../util/arrays";
 
 export enum Direction {
   NORTH = "NORTH",

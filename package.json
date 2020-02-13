@@ -79,6 +79,7 @@
     "@types/react-redux": "^7.1.7",
     "@types/redux-saga": "^0.10.5",
     "@types/reselect": "^2.2.0",
+    "circular-dependency-plugin": "^5.2.0",
     "gh-pages": "^2.2.0",
     "git-revision-webpack-plugin": "^3.0.4",
     "prettier": "^1.19.1",

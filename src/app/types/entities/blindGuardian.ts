@@ -6,7 +6,7 @@ import { Arrays } from "../../util";
 /**
  * The blind guardian is a sightless, senseless automaton
  */
-export interface BlindGuardian extends BaseEntity.BaseEntity {
+export interface BlindGuardian extends BaseEntity.HostileEntity {
   type: "blind-guardian";
   heading: Direction.Direction;
 }

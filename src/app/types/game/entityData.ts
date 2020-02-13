@@ -1,5 +1,7 @@
 import { ID, Dimension, Point, Maybe } from "..";
 import { Entity, Player } from "../entities";
+import { Arrays } from "../../util";
+import { EntityData } from ".";
 
 export interface EntityData {
   entityMap: Record<ID.ID, Entity.Entity>;
@@ -49,6 +51,9 @@ export const getPlayer = (data: EntityData): Player.Player =>
 
 export const byId = (data: EntityData, id: ID.ID) => data.entityMap[id];
 
+export const byType = (data: EntityData, type: string): Entity.Entity[] =>
+  Arrays.nonNull(data.typeMap[type] || []).map(id => data.entityMap[id]);
+
 export const moveEntity = (
   id: ID.ID,
   data: EntityData,
@@ -74,6 +79,48 @@ export const moveEntity = (
   } else {
     return data;
   }
+};
+
+export const removeEntity = (
+  id: ID.ID,
+  data: EntityData,
+  d: Dimension.Dimension
+): EntityData => {
+  const entity = data.entityMap[id];
+  const idx = Point.toIndex(entity.position, d);
+  return {
+    ...data,
+    entityMap: Object.keys(data.entityMap).reduce(
+      (m: Record<ID.ID, Entity.Entity>, k) => {
+        if (k !== id) {
+          m[k] = data.entityMap[k];
+        }
+        return m;
+      },
+      {}
+    ),
+    typeMap: Object.keys(data.typeMap).reduce(
+      (m: Record<string, ID.ID[]>, k) => {
+        if (k === entity.type) {
+          m[k] = data.typeMap[k].filter(eId => eId !== id);
+        } else {
+          m[k] = data.typeMap[k];
+        }
+        return m;
+      },
+      {}
+    ),
+    positionMap: Object.keys(data.positionMap)
+      .map(k => parseInt(k) as number)
+      .reduce((m: Record<number, ID.ID[]>, k: number) => {
+        if (k === idx) {
+          m[k] = data.positionMap[k].filter(eId => eId !== id);
+        } else {
+          m[k] = data.positionMap[k];
+        }
+        return m;
+      }, {})
+  };
 };
 
 // might need to augment to handle type change

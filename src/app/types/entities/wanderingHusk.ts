@@ -8,7 +8,7 @@ import { Arrays } from "../../util";
  * It pursues relentlessly that which it can see.
  */
 
-export interface WanderingHusk extends BaseEntity.BaseEntity {
+export interface WanderingHusk extends BaseEntity.HostileEntity {
   type: "wandering-husk";
   heading: Direction.Direction;
 }

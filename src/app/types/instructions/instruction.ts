@@ -3,6 +3,8 @@ import * as Move from "./move";
 import * as Update from "./update";
 import * as Wait from "./wait";
 import * as UpdateGameState from "./updateGameState";
+import * as See from "./see";
+import * as Remove from "./remove";
 import { GameData } from "../game";
 import { InstructionType } from "./baseInstruction";
 
@@ -10,7 +12,9 @@ export type Instruction =
   | Move.MoveInstruction
   | Update.UpdateInstruction
   | Wait.WaitInstruction
-  | UpdateGameState.UpdateGameStateInstruction;
+  | UpdateGameState.UpdateGameStateInstruction
+  | See.SeeInstruction
+  | Remove.RemoveInstruction;
 
 export const validate = (
   instruction: Instruction,
@@ -50,6 +54,10 @@ export const apply = (
         return Result.ok(Wait.apply(instruction, gameData));
       case InstructionType.UPDATE_GAME_STATE:
         return Result.ok(UpdateGameState.apply(instruction, gameData));
+      case InstructionType.SEE:
+        return Result.ok(See.apply(instruction, gameData));
+      case InstructionType.REMOVE:
+        return Result.ok(Remove.apply(instruction, gameData));
     }
   } catch (e) {
     console.warn("Error applying instruction", instruction);

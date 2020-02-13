@@ -22,5 +22,7 @@ export const apply = (
   gameData: GameData.GameData
 ): GameData.GameData => ({
   ...gameData,
-  state: update.payload.updated
+  state: GameState.lost(gameData.state)
+    ? gameData.state
+    : update.payload.updated
 });

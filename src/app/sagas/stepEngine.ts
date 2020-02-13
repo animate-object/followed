@@ -5,15 +5,14 @@ import {
   ActionTypes,
   processStep
 } from "../actions";
-import { Loadable, Instruction, Result, Maybe } from "../types";
+import { Loadable, Instruction, Result, Outcome, Phenomenon } from "../types";
 import { GameData, EntityData, GameState } from "../types/game";
 import { select, put, take, call } from "redux-saga/effects";
 import { getGame } from "../selectors";
-import { EntityClass } from "../types/entities/baseEntity";
 import { Entity } from "../types/entities";
-import { HostileEntity } from "../types/entities/entity";
 
 export function* stepEngine() {
+  let activePhenomena: Phenomenon.Phenomenon[] = [];
   while (true) {
     try {
       const { step }: RequestStep = yield take(ActionTypes.REQUEST_STEP);
@@ -48,8 +47,7 @@ export function* stepEngine() {
           continue;
         }
 
-        // player collisions POC:
-        const collisionInstructions: Instruction.Instruction[] = yield call(
+        const collisionOutcomes: Outcome.Outcome[] = yield call(
           processCollisions,
           gameData,
           afterMovement.data
@@ -57,7 +55,10 @@ export function* stepEngine() {
 
         const afterCollisions: Result.Result<GameData.GameData> = yield call(
           Instruction.applyAll,
-          collisionInstructions,
+          collisionOutcomes.reduce(
+            (i: Instruction.Instruction[], o) => [...i, ...o.instructions],
+            []
+          ),
           afterMovement.data
         );
 
@@ -66,8 +67,30 @@ export function* stepEngine() {
           continue;
         }
 
-        yield put(processStep(step.id, afterCollisions.data));
-        yield call(checkGameState, afterCollisions.data);
+        activePhenomena = activePhenomena.concat(
+          Outcome.phenomena(collisionOutcomes)
+        );
+
+        const phenomenalInstructions = yield call(
+          applyPhenomena,
+          activePhenomena,
+          gameData
+        );
+
+        const afterPhenomena: Result.Result<GameData.GameData> = yield call(
+          Instruction.applyAll,
+          phenomenalInstructions,
+          afterCollisions.data
+        );
+
+        if (Result.isErr(afterPhenomena)) {
+          yield put(abortStep(step.id));
+          continue;
+        }
+        activePhenomena = yield call(prunePhenomena, activePhenomena);
+
+        yield put(processStep(step.id, afterPhenomena.data));
+        yield call(checkGameState, afterPhenomena.data);
         yield put(completeStep(step.id));
       }
     } catch (e) {
@@ -77,10 +100,10 @@ export function* stepEngine() {
   }
 }
 
-export function* processCollisions(
+export const processCollisions = (
   last: GameData.GameData,
   next: GameData.GameData
-) {
+) => {
   const player = EntityData.getPlayer(next.entityData)!;
   const collisions = EntityData.entitiesAtPoint(
     next.entityData,
@@ -97,18 +120,19 @@ export function* processCollisions(
       )
     );
 
-  const hostile: Maybe.Maybe<HostileEntity> = collisions.find(
-    e => e.cls === EntityClass.HOSTILE
-  ) as Maybe.Maybe<HostileEntity>;
-  if (collisions.length === 0) {
-    return [];
-  } else if (hostile) {
-    return [
-      Instruction.updateGameState(GameState.lose({ entityId: hostile.id }))
-    ];
-  } else if (collisions.find(e => e.type === "exit")) {
-    return [Instruction.updateGameState(GameState.win())];
+  return collisions.map(e => Entity.onCollideWithPlayer(e, next));
+};
+
+export function* applyPhenomena(
+  activePhenomena: Phenomenon.Phenomenon[],
+  gameData: GameData.GameData
+) {
+  let instructions: Instruction.Instruction[] = [];
+  for (const p of activePhenomena) {
+    const generatedInstructions = yield call(p.fn, gameData);
+    instructions = instructions.concat(generatedInstructions);
   }
+  return instructions;
 }
 
 export function* checkGameState({ state, entityData }: GameData.GameData) {
@@ -127,3 +151,14 @@ export function* checkGameState({ state, entityData }: GameData.GameData) {
     window.location.reload();
   }
 }
+
+export const prunePhenomena = (
+  activePhenomena: Phenomenon.Phenomenon[]
+): Phenomenon.Phenomenon[] => {
+  return activePhenomena
+    .map(p => ({
+      ...p,
+      duration: p.duration !== "FOREVER" ? p.duration - 1 : p.duration
+    }))
+    .filter(a => a.duration === "FOREVER" || a.duration > 0);
+};
