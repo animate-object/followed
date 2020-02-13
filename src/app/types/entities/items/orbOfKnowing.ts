@@ -38,4 +38,4 @@ export const knowing = (id: ID.ID): Phenomenon.Phenomenon => ({
   }
 });
 
-export const DISPLAY = "🟣";
+export const DISPLAY = "㊙️";
