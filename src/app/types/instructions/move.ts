@@ -7,6 +7,7 @@ export interface MoveInstruction extends BaseInstruction {
   type: InstructionType.MOVE;
   payload: {
     direction: Direction.Direction;
+    entityId: ID.ID;
   };
 }
 
@@ -15,18 +16,17 @@ export const move = (
   direction: Direction.Direction
 ): MoveInstruction => ({
   type: InstructionType.MOVE,
-  entityId,
-  payload: { direction }
+  payload: { entityId, direction }
 });
 
 export const validate = (
-  move: MoveInstruction,
+  { payload }: MoveInstruction,
   gameData: GameData.GameData
 ): Result.Result<void> =>
   Maze.canWalk(
     gameData.maze,
-    gameData.entityData.entityMap[move.entityId].position,
-    move.payload.direction
+    gameData.entityData.entityMap[payload.entityId].position,
+    payload.direction
   )
     ? Result.ok(undefined)
     : Result.err("way is blocked");
@@ -35,19 +35,17 @@ export const apply = (
   move: MoveInstruction,
   gameData: GameData.GameData
 ): GameData.GameData => {
+  const { entityId, direction } = move.payload;
   const entityData = EntityData.moveEntity(
-    move.entityId,
+    entityId,
     gameData.entityData,
-    Point.neighbor(
-      gameData.entityData.entityMap[move.entityId].position,
-      move.payload.direction
-    ),
+    Point.neighbor(gameData.entityData.entityMap[entityId].position, direction),
     gameData.maze.dimension
   );
 
   const player = EntityData.getPlayer(entityData);
   const { seen, sees } =
-    player && move.entityId === player.id
+    player && entityId === player.id
       ? updatePlayerVision(gameData.seen, player, gameData.maze)
       : gameData;
 

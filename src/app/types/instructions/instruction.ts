@@ -2,13 +2,15 @@ import { Result, Instruction } from "..";
 import * as Move from "./move";
 import * as Update from "./update";
 import * as Wait from "./wait";
+import * as UpdateGameState from "./updateGameState";
 import { GameData } from "../game";
 import { InstructionType } from "./baseInstruction";
 
 export type Instruction =
   | Move.MoveInstruction
   | Update.UpdateInstruction
-  | Wait.WaitInstruction;
+  | Wait.WaitInstruction
+  | UpdateGameState.UpdateGameStateInstruction;
 
 export const validate = (
   instruction: Instruction,
@@ -46,6 +48,8 @@ export const apply = (
         return Result.ok(Update.apply(instruction, gameData));
       case InstructionType.WAIT:
         return Result.ok(Wait.apply(instruction, gameData));
+      case InstructionType.UPDATE_GAME_STATE:
+        return Result.ok(UpdateGameState.apply(instruction, gameData));
     }
   } catch (e) {
     console.warn("Error applying instruction", instruction);

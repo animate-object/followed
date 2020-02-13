@@ -1,6 +1,7 @@
 import { GameData } from "../game";
 import { Instruction } from "..";
 import { BlindGuardian, Player, Exit, WanderingHusk } from ".";
+import { EntityData } from "../game/entityData";
 
 export type HostileEntity =
   | BlindGuardian.BlindGuardian
@@ -55,10 +56,7 @@ export const generateAiInstructions = (
   }
 };
 
-export const getKillMessage = (
-  p: Player.Player,
-  killer: HostileEntity
-): string => {
+export const getKillMessage = (p: Player.Player, killer: Entity): string => {
   switch (killer.type) {
     case "blind-guardian":
       return `${p.name} has been annihilated by ${getDescription(
@@ -66,5 +64,7 @@ export const getKillMessage = (
       )}. Nothing is left.`;
     case "wandering-husk":
       return `Blood and sinew cling to the maw of the wandering husk. ${p.name} has been consumed.`;
+    default:
+      return `${p.name} was killed by ${getDescription(killer)}`;
   }
 };

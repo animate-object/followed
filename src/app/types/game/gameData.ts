@@ -1,5 +1,5 @@
 import { Maze, Cell, Point, Instruction } from "..";
-import { EntityData, GameData } from ".";
+import { EntityData, GameData, GameState } from ".";
 import { Entity } from "../entities";
 
 export interface GameData {
@@ -8,6 +8,7 @@ export interface GameData {
   seen: Set<number>;
   sees: Set<number>;
   stepCount: number;
+  state: GameState.GameState;
 }
 
 export const create = (
@@ -28,7 +29,8 @@ export const create = (
     entityData,
     seen: new Set(),
     sees,
-    stepCount: 0
+    stepCount: 0,
+    state: GameState.play()
   };
 };
 

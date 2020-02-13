@@ -11,7 +11,6 @@ export interface UpdateInstruction extends BaseInstruction {
 
 export const update = (updated: Entity.Entity): UpdateInstruction => ({
   type: InstructionType.UPDATE,
-  entityId: updated.id,
   payload: { updated }
 });
 

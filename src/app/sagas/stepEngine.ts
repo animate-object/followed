@@ -6,7 +6,7 @@ import {
   processStep
 } from "../actions";
 import { Loadable, Instruction, Result, Maybe } from "../types";
-import { GameData, EntityData } from "../types/game";
+import { GameData, EntityData, GameState } from "../types/game";
 import { select, put, take, call } from "redux-saga/effects";
 import { getGame } from "../selectors";
 import { EntityClass } from "../types/entities/baseEntity";
@@ -17,7 +17,9 @@ export function* stepEngine() {
   while (true) {
     try {
       const { step }: RequestStep = yield take(ActionTypes.REQUEST_STEP);
+
       const game: Loadable.Loadable<GameData.GameData> = yield select(getGame);
+
       if (Loadable.isLoaded(game)) {
         const { data: gameData } = game;
 
@@ -35,22 +37,37 @@ export function* stepEngine() {
         const aiInstructions = GameData.generateAllAIInstructions(gameData);
         const instructions = [...aiInstructions, ...step.instructions];
 
-        const applied: Result.Result<GameData.GameData> = yield call(
+        const afterMovement: Result.Result<GameData.GameData> = yield call(
           Instruction.applyAll,
           instructions,
           gameData
         );
 
-        if (Result.isErr(applied)) {
+        if (Result.isErr(afterMovement)) {
           yield put(abortStep(step.id));
           continue;
         }
 
-        yield put(processStep(step.id, applied.data));
-
         // player collisions POC:
-        yield call(processCollisions, gameData, applied.data);
+        const collisionInstructions: Instruction.Instruction[] = yield call(
+          processCollisions,
+          gameData,
+          afterMovement.data
+        );
 
+        const afterCollisions: Result.Result<GameData.GameData> = yield call(
+          Instruction.applyAll,
+          collisionInstructions,
+          afterMovement.data
+        );
+
+        if (Result.isErr(afterCollisions)) {
+          yield put(abortStep(step.id));
+          continue;
+        }
+
+        yield put(processStep(step.id, afterCollisions.data));
+        yield call(checkGameState, afterCollisions.data);
         yield put(completeStep(step.id));
       }
     } catch (e) {
@@ -84,11 +101,28 @@ export function* processCollisions(
     e => e.cls === EntityClass.HOSTILE
   ) as Maybe.Maybe<HostileEntity>;
   if (collisions.length === 0) {
-    return;
+    return [];
   } else if (hostile) {
-    yield call(window.confirm, Entity.getKillMessage(player, hostile));
-    window.location.reload();
+    return [
+      Instruction.updateGameState(GameState.lose({ entityId: hostile.id }))
+    ];
   } else if (collisions.find(e => e.type === "exit")) {
+    return [Instruction.updateGameState(GameState.win())];
+  }
+}
+
+export function* checkGameState({ state, entityData }: GameData.GameData) {
+  const player = EntityData.getPlayer(entityData);
+  if (GameState.lost(state)) {
+    yield call(
+      window.confirm,
+      Entity.getKillMessage(
+        EntityData.getPlayer(entityData),
+        EntityData.byId(entityData, state.causeOfDeath.entityId)
+      )
+    );
+    window.location.reload();
+  } else if (GameState.won(state)) {
     yield call(window.confirm, `${player.name} escaped. . . this time.`);
     window.location.reload();
   }

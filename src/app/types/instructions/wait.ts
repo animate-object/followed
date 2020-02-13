@@ -4,11 +4,16 @@ import { GameData } from "../game";
 
 export interface WaitInstruction extends BaseInstruction {
   type: InstructionType.WAIT;
+  payload: {
+    entityId: ID.ID;
+  };
 }
 
 export const wait = (entityId: ID.ID): WaitInstruction => ({
   type: InstructionType.WAIT,
-  entityId
+  payload: {
+    entityId
+  }
 });
 
 export const apply = (

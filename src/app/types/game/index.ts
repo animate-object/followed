@@ -4,5 +4,6 @@
 
 import * as EntityData from "./entityData";
 import * as GameData from "./gameData";
+import * as GameState from "./gameState";
 
-export { EntityData, GameData };
+export { EntityData, GameData, GameState };

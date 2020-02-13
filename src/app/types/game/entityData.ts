@@ -44,8 +44,10 @@ export const entitiesAtPoint = (
   return ids.map(id => data.entityMap[id]);
 };
 
-export const getPlayer = (data: EntityData): Maybe.Maybe<Player.Player> =>
-  Maybe.map(id => data.entityMap[id] as Player.Player, data.playerEntityId);
+export const getPlayer = (data: EntityData): Player.Player =>
+  Maybe.map(id => data.entityMap[id] as Player.Player, data.playerEntityId)!;
+
+export const byId = (data: EntityData, id: ID.ID) => data.entityMap[id];
 
 export const moveEntity = (
   id: ID.ID,

@@ -1,12 +1,12 @@
 import { ID } from "..";
 
 export interface BaseInstruction {
-  entityId: ID.ID;
   type: InstructionType;
 }
 
 export enum InstructionType {
   MOVE = "MOVE",
   UPDATE = "UPDATE",
-  WAIT = "WAIT"
+  WAIT = "WAIT",
+  UPDATE_GAME_STATE = "UPDATE_GAME_STATE"
 }
