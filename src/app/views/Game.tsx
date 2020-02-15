@@ -4,6 +4,7 @@ import { GamePad } from "./GamePad";
 import { Effect, Direction } from "../types";
 import { KeyPad } from "./KeyPad";
 import { Camera } from "../util";
+import MediaQuery from "react-responsive";
 
 interface Props {
   grid: Camera.WindowedGrid;
@@ -16,9 +17,13 @@ export const Game = ({
   onMove,
   processingUpdates
 }: Props): JSX.Element => (
-  <>
-    <Grid grid={grid} />
-    <GamePad onMove={onMove} />
-    <KeyPad onMove={onMove} disabled={processingUpdates} />
-  </>
+  <MediaQuery minWidth={1024}>
+    {largeScreen => (
+      <>
+        <Grid grid={grid} largeScreen={largeScreen} />
+        {!largeScreen && <GamePad onMove={onMove} />}
+        <KeyPad onMove={onMove} disabled={processingUpdates} />
+      </>
+    )}
+  </MediaQuery>
 );

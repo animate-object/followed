@@ -1,20 +1,23 @@
 .root {
-  padding-top: 1rem;
+  padding-top: 5vh;
   display: flex;
   flex-direction: column;
-  height: 9rem;
-  width: 9rem;
+  height: 35vh;
+  width: 35vh;
 }
 
 .row {
-  height: 3rem;
-  width: 9rem;
+  height: calc(100% / 3);
+  width: 100%;
   display: flex;
 }
 
 .block {
-  height: 3rem;
-  width: 3rem;
+  height: 100%;
+  width: calc(100% / 3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .button {
@@ -25,6 +28,8 @@
 
   box-shadow: none;
   box-sizing: border-box;
+  height: 95%;
+  width: 95%;
 }
 
 .button:hover {
