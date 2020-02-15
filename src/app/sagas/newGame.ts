@@ -64,9 +64,9 @@ export function* newGame() {
         Api.maze,
         options.mazeOptions || {}
       );
-      const maze: Maze.Maze = Maze.fromMazeData(data);
-
-      yield put(startNewGame(maze, startingEntities(maze)));
+      const fromData: Maze.Maze = Maze.fromMazeData(data);
+      const [maze, entities] = startingEntities(fromData);
+      yield put(startNewGame(maze, entities));
     } catch (e) {
       console.warn("Error initializing new game");
       console.error(e);
@@ -74,9 +74,12 @@ export function* newGame() {
   }
 }
 
-export const startingEntities = ({ dimension }: Maze.Maze): Entity.Entity[] => {
+export const startingEntities = (
+  prePlacement: Maze.Maze
+): [Maze.Maze, Entity.Entity[]] => {
+  const { dimension } = prePlacement;
+
   const player = Player.create(name, Dimension.pointAlongEdge(dimension));
-  const exit = Exit.create(Dimension.randomPoint(dimension));
   const guardians = new Array(Numbers.randomInRange(1, 5))
     .fill(undefined)
     .map(_ => BlindGuardian.create(Dimension.randomPoint(dimension)));
@@ -85,10 +88,19 @@ export const startingEntities = ({ dimension }: Maze.Maze): Entity.Entity[] => {
     .map(_ => WanderingHusk.create(Dimension.randomPoint(dimension)));
 
   const enemies = [...guardians, ...husks];
-  return [
-    player,
-    exit,
-    ...enemies,
-    OrbOfKnowing.create(Dimension.randomPoint(dimension))
-  ];
+
+  const { placed, maze, unplaced } = Maze.placeEntitiesInDeadEnds(
+    prePlacement,
+    [Exit.create, OrbOfKnowing.create]
+  );
+
+  console.log(
+    `Ran out of deadends to place these entities ${unplaced
+      .map(u => u.type)
+      .join(", ")}`
+  );
+
+  const entities = [player, ...enemies, ...placed];
+
+  return [maze, entities];
 };

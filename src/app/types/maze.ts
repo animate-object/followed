@@ -1,11 +1,14 @@
 import * as Cell from "./cell";
 import * as MazeData from "./mazeData";
 import { Dimension, Point, Direction, Maybe } from ".";
+import { Arrays } from "../util";
+import { Entity } from "./entities";
 
 export interface Maze {
   readonly grid: Grid;
   readonly dimension: Dimension.Dimension;
   readonly algorithm: string;
+  readonly deadends: DeadEnds;
 }
 
 export type Grid = Array<Array<Cell.Cell>>;
@@ -16,10 +19,15 @@ export const fromMazeData = ({
   algorithm
 }: MazeData.MazeData): Maze => {
   const grid: Grid = [];
+  const deadends: number[] = [];
   for (let r = 0; r < dimension.height; r++) {
     const row = [];
     for (let c = 0; c < dimension.width; c++) {
-      row.push(Cell.fromByte(bytes[r * dimension.width + c]));
+      const cell = Cell.fromByte(bytes[r * dimension.width + c]);
+      row.push(cell);
+      if (Cell.isDeadEnd(cell)) {
+        deadends.push(Point.toIndex(Point.create(c, r), dimension));
+      }
     }
     grid.push(row);
   }
@@ -27,7 +35,11 @@ export const fromMazeData = ({
   return {
     grid,
     dimension,
-    algorithm
+    algorithm,
+    deadends: {
+      unused: deadends,
+      used: []
+    }
   };
 };
 
@@ -108,3 +120,74 @@ export const seenFromPoint = (
     )
     .concat(peekableCorners(maze, origin))
     .concat(origin);
+
+/**
+ * Deadends . . .
+ */
+
+interface DeadEnds {
+  used: number[];
+  unused: number[];
+}
+
+export const takeDeadEnd = (maze: Maze): [number, Maze] => {
+  const de = Arrays.randomItem(maze.deadends.unused);
+  if (de) {
+    return [
+      de,
+      {
+        ...maze,
+        deadends: {
+          unused: maze.deadends.unused.filter(c => c !== de),
+          used: [...maze.deadends.used, de]
+        }
+      }
+    ];
+  } else {
+    return [-1, maze];
+  }
+};
+
+export const deadEnds = (maze: Maze): number[] => {
+  return [...maze.deadends.used, ...maze.deadends.unused];
+};
+
+type EntityCreator = (p: Point.Point) => Entity.Entity;
+type PlacementAcc = {
+  maze: Maze;
+  placed: Entity.Entity[];
+  unplaced: Entity.Entity[];
+};
+
+export const placeEntitiesInDeadEnds = (
+  maze: Maze,
+  creators: EntityCreator[]
+): PlacementAcc => {
+  return creators.reduce(
+    (acc: PlacementAcc, creator) => {
+      const [de, maze] = takeDeadEnd(acc.maze);
+      let placed;
+      let unplaced;
+      if (de) {
+        placed = [
+          ...acc.placed,
+          creator(Point.fromIndex(de, acc.maze.dimension))
+        ];
+        unplaced = [...acc.unplaced];
+      } else {
+        placed = [...acc.placed];
+        unplaced = [...acc.unplaced, creator(Point.create(-1, -1))];
+      }
+      return {
+        maze,
+        placed,
+        unplaced
+      };
+    },
+    {
+      maze,
+      placed: [],
+      unplaced: []
+    }
+  );
+};

@@ -30,6 +30,12 @@ export const fromByte = (byte: number) => ({
   })
 });
 
+export const isDeadEnd = ({ walls }: Cell) => {
+  return (
+    [walls.n, walls.e, walls.s, walls.w].filter(w => w === true).length >= 3
+  );
+};
+
 export const hasWall = (
   { walls }: Cell,
   direction: Direction.Direction
