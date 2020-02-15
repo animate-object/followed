@@ -1,8 +1,17 @@
 import * as Player from "./player";
 import * as BaseEntity from "./baseEntity";
 import * as Entity from "./entity";
-import * as BlindGuardian from "./blindGuardian";
-import * as WanderingHusk from "./wanderingHusk";
+import * as BlindGuardian from "./hostiles/blindGuardian";
+import * as WanderingHusk from "./hostiles/wanderingHusk";
 import * as Exit from "./exit";
+import * as SinisterDolls from "./hostiles/sinisterDolls";
 
-export { Player, BaseEntity, Entity, BlindGuardian, WanderingHusk, Exit };
+export {
+  Player,
+  BaseEntity,
+  Entity,
+  BlindGuardian,
+  WanderingHusk,
+  Exit,
+  SinisterDolls
+};

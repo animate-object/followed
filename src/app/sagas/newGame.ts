@@ -12,7 +12,8 @@ import {
   BlindGuardian,
   Entity,
   Exit,
-  WanderingHusk
+  WanderingHusk,
+  SinisterDolls
 } from "../types/entities";
 import { OrbOfKnowing } from "../types/entities/items";
 
@@ -91,7 +92,7 @@ export const startingEntities = (
 
   const { placed, maze, unplaced } = Maze.placeEntitiesInDeadEnds(
     prePlacement,
-    [Exit.create, OrbOfKnowing.create]
+    [Exit.create, OrbOfKnowing.create, SinisterDolls.create]
   );
 
   console.log(

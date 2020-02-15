@@ -1,7 +1,7 @@
-import { BaseEntity } from ".";
-import { Point, ID, Direction, Instruction, Maze, Maybe } from "..";
-import { GameData, EntityData } from "../game";
-import { Arrays } from "../../util";
+import { BaseEntity } from "..";
+import { Point, ID, Direction, Instruction, Maze, Maybe } from "../..";
+import { GameData, EntityData } from "../../game";
+import { Arrays } from "../../../util";
 
 /**
  * The wandering husk shambles aimlesslessy, until it lays its eyes on prey.

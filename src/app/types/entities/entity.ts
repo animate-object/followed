@@ -1,12 +1,20 @@
 import { GameData, GameState } from "../game";
 import { Instruction, Outcome } from "..";
-import { BlindGuardian, Player, Exit, WanderingHusk, Entity } from ".";
+import {
+  BlindGuardian,
+  Player,
+  Exit,
+  WanderingHusk,
+  Entity,
+  SinisterDolls
+} from ".";
 import { EntityClass } from "./baseEntity";
 import { Items, OrbOfKnowing } from "./items";
 
 export type HostileEntities =
   | BlindGuardian.BlindGuardian
-  | WanderingHusk.WanderingHusk;
+  | WanderingHusk.WanderingHusk
+  | SinisterDolls.SinisterDolls;
 
 export type Entity = Player.Player | Exit.Exit | HostileEntities | Items;
 
@@ -29,6 +37,8 @@ export const getDisplayName = (e: Entity): string => {
       return WanderingHusk.DISPLAY;
     case "orb-of-knowing":
       return OrbOfKnowing.DISPLAY;
+    case "sinister-dolls":
+      return SinisterDolls.DISPLAY;
   }
 };
 
@@ -44,6 +54,8 @@ export const getDescription = (e: Entity): string => {
       return "a wandering husk";
     case "orb-of-knowing":
       return "a mysterious, translucent orb";
+    case "sinister-dolls":
+      return "two lifelike dolls";
   }
 };
 
@@ -56,6 +68,8 @@ export const generateAiInstructions = (
       return BlindGuardian.next(e, gameData);
     case "wandering-husk":
       return WanderingHusk.next(e, gameData);
+    case "sinister-dolls":
+      return SinisterDolls.next(e, gameData);
     default:
       return [];
   }
@@ -86,6 +100,8 @@ export const getKillMessage = (p: Player.Player, killer: Entity): string => {
       )}. Nothing is left.`;
     case "wandering-husk":
       return `Blood and sinew cling to the maw of the wandering husk. ${p.name} has been consumed.`;
+    case "sinister-dolls":
+      return `The dolls draw closer. ${p.name} is frozen. Then, darkness. ${p.name} is never heard from again.`;
     default:
       return `${p.name} was killed by ${getDescription(killer)}`;
   }

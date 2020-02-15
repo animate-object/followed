@@ -1,7 +1,7 @@
-import { BaseEntity } from ".";
-import { Point, ID, Direction, Instruction, Maze } from "..";
-import { GameData } from "../game";
-import { Arrays } from "../../util";
+import { BaseEntity } from "..";
+import { Point, ID, Direction, Instruction, Maze } from "../..";
+import { GameData } from "../../game";
+import { Arrays } from "../../../util";
 
 /**
  * The blind guardian is a sightless, senseless automaton

@@ -1,4 +1,4 @@
-import { Maze, Cell, Point, Instruction } from "..";
+import { Maze, Cell, Point, Instruction, Direction } from "..";
 import { EntityData, GameData, GameState } from ".";
 import { Entity } from "../entities";
 
@@ -33,6 +33,25 @@ export const create = (
     state: GameState.play()
   };
 };
+
+export const lookForEntityInDirection = (
+  d: Direction.Direction,
+  origin: Point.Point,
+  gameData: GameData.GameData,
+  predicate: (e: Entity.Entity) => boolean,
+  siteRadius: number = 5
+): boolean =>
+  Maze.lookInDirection(gameData.maze, d, origin, siteRadius).reduce(
+    (found: boolean, p) =>
+      !found
+        ? EntityData.entitiesAtPoint(
+            gameData.entityData,
+            p,
+            gameData.maze.dimension
+          ).find(predicate) != null
+        : found,
+    false
+  );
 
 export interface CellMeta {
   occupants: Entity.Entity[];
