@@ -1,4 +1,5 @@
 import { Dimension } from ".";
+import { Arrays } from "../util";
 
 type Algorithm = "aldous-broder" | "binary-tree" | "side-winder";
 
@@ -8,9 +9,14 @@ export interface MazeData {
   algorithm: Algorithm;
 }
 
+type ApiCorner = "nw" | "ne" | "sw" | "se";
+type ApiDir = "n" | "e" | "s" | "w";
+
 export interface Options {
   dimension?: Dimension.Dimension;
   algorithm?: Algorithm;
+  corner?: ApiCorner;
+  direction?: ApiDir;
 }
 
 export const fromApi = (
@@ -24,3 +30,11 @@ export const fromApi = (
     algorithm
   };
 };
+
+export const randomDirectionalOptions = (): Pick<
+  Options,
+  "corner" | "direction"
+> => ({
+  corner: Arrays.randomItem(["nw", "ne", "sw", "se"]),
+  direction: Arrays.randomItem(["n", "e", "s", "w"])
+});

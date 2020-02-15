@@ -49,7 +49,8 @@ export function* firstGame() {
           "aldous-broder",
           "binary-tree",
           "side-winder"
-        ])
+        ]),
+        ...MazeData.randomDirectionalOptions()
       }
     })
   );
