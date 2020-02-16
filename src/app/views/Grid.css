@@ -1,9 +1,10 @@
 .root {
   overflow: auto;
-  height: 50vh;
-  width: 50vh;
+  height: 55vh;
+  width: 55vh;
   display: flex;
   flex-direction: column;
+  box-sizing: border-box;
 }
 
 @media (max-aspect-ratio: 1/2) {
@@ -21,6 +22,6 @@
 }
 
 .large {
-  height: 98vh;
-  width: 98vh;
+  height: 93vh;
+  width: 93vh;
 }

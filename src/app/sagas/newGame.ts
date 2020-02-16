@@ -96,11 +96,13 @@ export const startingEntities = (
     [Exit.create, OrbOfKnowing.create, SinisterDolls.create]
   );
 
-  console.log(
-    `Ran out of deadends to place these entities ${unplaced
-      .map(u => u.type)
-      .join(", ")}`
-  );
+  if (unplaced.length > 0) {
+    console.log(
+      `Ran out of deadends to place these entities ${unplaced
+        .map(u => u.type)
+        .join(", ")}`
+    );
+  }
 
   const entities = [player, ...enemies, ...placed];
 

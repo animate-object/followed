@@ -1,0 +1,11 @@
+.root {
+  height: 10vh;
+  box-sizing: border-box;
+  width: 98vw;
+}
+
+@media (min-aspect-ratio: 1/2) {
+  .root {
+    width: 55vh;
+  }
+}

@@ -1,9 +1,9 @@
 .root {
-  padding-top: 5vh;
   display: flex;
   flex-direction: column;
-  height: 35vh;
-  width: 35vh;
+  height: 30vh;
+  width: 30vh;
+  box-sizing: border-box;
 }
 
 .row {
