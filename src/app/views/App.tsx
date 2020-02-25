@@ -2,8 +2,12 @@ import React, { Dispatch } from "react";
 import styles from "./App.css";
 import { connect } from "react-redux";
 import { State } from "../state";
-import { Loadable, Effect, Direction } from "../types";
-import { getIsProcessingStep, getWindowedDisplayGrid } from "../selectors";
+import { Loadable, Effect, Direction, Message } from "../types";
+import {
+  getIsProcessingStep,
+  getWindowedDisplayGrid,
+  getMessages
+} from "../selectors";
 import { Game } from "./Game";
 import { AppAction, movePlayer } from "../actions";
 import { WindowedGrid } from "../util/camera";
@@ -12,6 +16,7 @@ import InfoButton from "./InfoButton";
 interface StateProps {
   grid: Loadable.Loadable<WindowedGrid>;
   processingUpdates: boolean;
+  messages: Message.Message[];
 }
 
 interface DispatchProps {
@@ -20,7 +25,7 @@ interface DispatchProps {
 
 type Props = StateProps & DispatchProps;
 
-const App = ({ grid, processingUpdates, onMove }: Props) => {
+const App = ({ grid, processingUpdates, messages, onMove }: Props) => {
   return (
     <div className={styles.root}>
       {Loadable.isLoading(grid) && <span>Loading . . . </span>}
@@ -31,6 +36,7 @@ const App = ({ grid, processingUpdates, onMove }: Props) => {
             processingUpdates={processingUpdates}
             grid={grid.data}
             onMove={onMove}
+            messages={messages}
           />
         </>
       )}
@@ -40,7 +46,8 @@ const App = ({ grid, processingUpdates, onMove }: Props) => {
 
 export const mapStateToProps = (state: State): StateProps => ({
   grid: getWindowedDisplayGrid(state),
-  processingUpdates: getIsProcessingStep(state)
+  processingUpdates: getIsProcessingStep(state),
+  messages: getMessages(state)
 });
 
 export const mapDispatchToProps = (

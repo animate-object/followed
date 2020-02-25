@@ -1,15 +1,17 @@
-import { Maze, ID } from "./types";
+import { Maze, ID, Message } from "./types";
 import { Loadable } from "./types";
 import { GameData, EntityData } from "./types/game";
 import { Entity } from "./types/entities";
 
 export interface State {
   game: Loadable.Loadable<GameData.GameData>;
+  chat: Message.Message[];
   stepId?: ID.ID;
 }
 
 export const create = (init = {}): State => ({
   game: Loadable.loading(),
+  chat: [],
   ...init
 });
 
@@ -69,5 +71,10 @@ export const completeStep = (state: State, stepId: ID.ID): State =>
     state
   );
 
-export const abortStep = (state: State, stepId: ID.ID) =>
+export const abortStep = (state: State, stepId: ID.ID): State =>
   state.stepId === stepId ? { ...state, stepId: undefined } : state;
+
+export const addMessage = (state: State, message: Message.Message): State => ({
+  ...state,
+  chat: [message, ...state.chat].slice(0, 5)
+});

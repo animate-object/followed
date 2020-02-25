@@ -2,9 +2,10 @@ import {
   RequestNewGame,
   ActionTypes,
   startNewGame,
-  requestNewGame
+  requestNewGame,
+  addMessage
 } from "../actions";
-import { Maze, Dimension, MazeData, Maybe } from "../types";
+import { Maze, Dimension, MazeData, Maybe, Message } from "../types";
 import { call, take, put } from "redux-saga/effects";
 import { Api, Numbers, Arrays } from "../util";
 import {
@@ -69,6 +70,7 @@ export function* newGame() {
       const fromData: Maze.Maze = Maze.fromMazeData(data);
       const [maze, entities] = startingEntities(fromData);
       yield put(startNewGame(maze, entities));
+      yield put(addMessage(Message.create("The game is afoot.")));
     } catch (e) {
       console.warn("Error initializing new game");
       console.error(e);

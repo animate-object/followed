@@ -14,6 +14,7 @@ import * as Effect from "./effect";
 import * as Maybe from "./maybe";
 import * as Phenomenon from "./phenomenon";
 import * as Outcome from "./outcome";
+import * as Message from "./message";
 
 export {
   Dimension,
@@ -31,5 +32,6 @@ export {
   Effect,
   Maybe,
   Phenomenon,
-  Outcome
+  Outcome,
+  Message
 };

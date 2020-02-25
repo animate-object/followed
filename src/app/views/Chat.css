@@ -2,6 +2,8 @@
   height: 10vh;
   box-sizing: border-box;
   width: 98vw;
+  font: 2rem;
+  color: whitesmoke;
 }
 
 @media (min-aspect-ratio: 1/2) {

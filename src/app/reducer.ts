@@ -18,6 +18,8 @@ export const reducer = (
       return State.newGame(state, action.maze, action.entities);
     case ActionTypes.REQUEST_NEW_GAME:
       return State.requestingNewGame(state);
+    case ActionTypes.ADD_MESSAGE:
+      return State.addMessage(state, action.message);
     default:
       return state;
   }

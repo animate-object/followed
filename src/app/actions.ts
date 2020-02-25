@@ -1,4 +1,4 @@
-import { MazeData, Maze, Step, ID, Direction } from "./types";
+import { MazeData, Maze, Step, ID, Direction, Message } from "./types";
 import { Entity } from "./types/entities";
 import { GameData } from "./types/game";
 
@@ -11,7 +11,9 @@ export enum ActionTypes {
   COMPLETE_STEP = "COMPLETE_STEP",
   ABORT_STEP = "ABORT_STEP",
 
-  MOVE_PLAYER = "MOVE_PLAYER"
+  MOVE_PLAYER = "MOVE_PLAYER",
+
+  ADD_MESSAGE = "ADD_MESSAGE"
 }
 
 interface NewGameOptions {
@@ -54,6 +56,11 @@ export interface MovePlayer {
   direction?: Direction.Direction;
 }
 
+export interface AddMessage {
+  type: ActionTypes.ADD_MESSAGE;
+  message: Message.Message;
+}
+
 export type AppAction =
   | RequestNewGame
   | StartNewGame
@@ -61,7 +68,8 @@ export type AppAction =
   | AbortStep
   | CompleteStep
   | ProcessStep
-  | MovePlayer;
+  | MovePlayer
+  | AddMessage;
 
 export const requestNewGame = (
   options: NewGameOptions = {}
@@ -103,4 +111,9 @@ export const completeStep = (stepId: ID.ID): CompleteStep => ({
 export const movePlayer = (direction?: Direction.Direction): MovePlayer => ({
   type: ActionTypes.MOVE_PLAYER,
   direction
+});
+
+export const addMessage = (message: Message.Message): AddMessage => ({
+  type: ActionTypes.ADD_MESSAGE,
+  message
 });
