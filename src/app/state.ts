@@ -5,13 +5,18 @@ import { Entity } from "./types/entities";
 
 export interface State {
   game: Loadable.Loadable<GameData.GameData>;
-  chat: Message.Message[];
+  chat: Chat;
   stepId?: ID.ID;
+}
+
+interface Chat {
+  messages: Message.Message[];
+  roundsSince: number;
 }
 
 export const create = (init = {}): State => ({
   game: Loadable.loading(),
-  chat: [],
+  chat: { messages: [], roundsSince: 0 },
   ...init
 });
 
@@ -65,7 +70,15 @@ export const completeStep = (state: State, stepId: ID.ID): State =>
             game: Loadable.map(
               g => ({ ...g, stepCount: g.stepCount + 1 }),
               state.game
-            )
+            ),
+            chat: {
+              ...state.chat,
+              messages: [Message.create(""), ...state.chat.messages].slice(
+                0,
+                5
+              ),
+              roundsSince: state.chat.roundsSince += 1
+            }
           }
         : state,
     state
@@ -76,5 +89,8 @@ export const abortStep = (state: State, stepId: ID.ID): State =>
 
 export const addMessage = (state: State, message: Message.Message): State => ({
   ...state,
-  chat: [message, ...state.chat].slice(0, 5)
+  chat: {
+    messages: [message, ...state.chat.messages].slice(0, 5),
+    roundsSince: 0
+  }
 });

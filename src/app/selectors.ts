@@ -37,4 +37,7 @@ export const getWindowedDisplayGrid = createSelector(
     )
 );
 
-export const getMessages = createSelector(getState, state => state.chat);
+export const getMessages = createSelector(
+  getState,
+  state => state.chat.messages
+);
