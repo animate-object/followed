@@ -25,23 +25,6 @@ export const getColor = (e: Entity): string => {
   }
 };
 
-export const getDisplayName = (e: Entity): string => {
-  switch (e.type) {
-    case "player":
-      return e.displayName;
-    case "blind-guardian":
-      return BlindGuardian.DISPLAY;
-    case "exit":
-      return Exit.DISPLAY;
-    case "wandering-husk":
-      return WanderingHusk.DISPLAY;
-    case "orb-of-knowing":
-      return OrbOfKnowing.DISPLAY;
-    case "sinister-dolls":
-      return SinisterDolls.DISPLAY;
-  }
-};
-
 export const getDescription = (e: Entity): string => {
   switch (e.type) {
     case "player":

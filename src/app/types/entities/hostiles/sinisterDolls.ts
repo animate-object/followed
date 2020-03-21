@@ -43,5 +43,3 @@ export const next = (
     ? [Instruction.move(e.id, towardPlayer)]
     : [];
 };
-
-export const DISPLAY = "🎎";

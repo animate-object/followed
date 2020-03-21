@@ -95,5 +95,3 @@ export const lookForPlayerInDirection = (
         : foundPlayer,
     false
   );
-
-export const DISPLAY = "🧟";
