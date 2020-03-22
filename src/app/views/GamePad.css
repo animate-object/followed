@@ -21,7 +21,7 @@
 }
 
 .button {
-  background-color: var(--light-green);
+  background-color: #444444;
   padding: 0;
   outline: none;
   border-radius: 8px;
@@ -32,14 +32,14 @@
   width: 95%;
 }
 
-.button:hover {
-  background-color: var(--green);
+.button:active {
+  background-color: #222222;
 }
 
 .wait {
-  background-color: var(--light-blue);
+  background-color: #aaabbb;
 }
 
-.wait:hover {
-  background-color: var(--blue);
+.wait:active {
+  background-color: #7799bb;
 }
