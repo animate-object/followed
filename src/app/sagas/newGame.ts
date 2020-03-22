@@ -32,19 +32,18 @@ export function* firstGame() {
     requestNewGame({
       mazeOptions: {
         dimension: Arrays.randomItem([
-          // Dimension.create(10, 10),
-          // Dimension.create(15, 15),
-          // Dimension.create(15, 15),
-          // Dimension.create(15, 15),
-          // Dimension.create(15, 15),
-          // Dimension.create(20, 20),
-          // Dimension.create(25, 10),
-          // Dimension.create(10, 25),
-          // Dimension.create(20, 15),
-          // Dimension.create(15, 20),
-          // Dimension.create(30, 5),
-          // Dimension.create(5, 30)
-          Dimension.create(5, 5)
+          Dimension.create(10, 10),
+          Dimension.create(15, 15),
+          Dimension.create(15, 15),
+          Dimension.create(15, 15),
+          Dimension.create(15, 15),
+          Dimension.create(20, 20),
+          Dimension.create(25, 10),
+          Dimension.create(10, 25),
+          Dimension.create(20, 15),
+          Dimension.create(15, 20),
+          Dimension.create(30, 5),
+          Dimension.create(5, 30)
         ]),
         algorithm: Arrays.randomItem([
           "aldous-broder",
@@ -86,15 +85,15 @@ export const startingEntities = (
   const { dimension } = prePlacement;
 
   const player = Player.create(name, Dimension.pointAlongEdge(dimension));
-  // const guardians = new Array(Numbers.randomInRange(1, 5))
-  //   .fill(undefined)
-  //   .map(_ => BlindGuardian.create(Dimension.randomPoint(dimension)));
-  // const husks = new Array(Arrays.randomItem([1, 1, 2, 2, 3]))
-  //   .fill(undefined)
-  //   .map(_ => WanderingHusk.create(Dimension.randomPoint(dimension)));
+  const guardians = new Array(Numbers.randomInRange(1, 5))
+    .fill(undefined)
+    .map(_ => BlindGuardian.create(Dimension.randomPoint(dimension)));
+  const husks = new Array(Arrays.randomItem([1, 1, 2, 2, 3]))
+    .fill(undefined)
+    .map(_ => WanderingHusk.create(Dimension.randomPoint(dimension)));
 
-  // const enemies = [...guardians, ...husks];
-  const enemies: Entity.Entity[] = [];
+  const enemies = [...guardians, ...husks];
+
   const { placed, maze, unplaced } = Maze.placeEntitiesInDeadEnds(
     prePlacement,
     [Exit.create, OrbOfKnowing.create]
