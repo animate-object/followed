@@ -4,4 +4,5 @@ export { wait } from "./wait";
 export { updateGameState } from "./updateGameState";
 export { see } from "./see";
 export { remove } from "./remove";
+export { add } from "./add";
 export * from "./instruction";

@@ -11,13 +11,13 @@ const getDisplayLetter = (e: EntityT.Entity): string => {
     case "wandering-husk":
       return "H";
     case "blind-guardian":
-      return "H";
+      return "G";
     case "orb-of-knowing":
       return "O";
     case "exit":
       return "E";
     default:
-      return "?";
+      return "S ";
   }
 };
 

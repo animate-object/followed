@@ -6,7 +6,8 @@ import {
   Exit,
   WanderingHusk,
   Entity,
-  SinisterDolls
+  SinisterDolls,
+  Seeker
 } from ".";
 import { EntityClass } from "./baseEntity";
 import { Items, OrbOfKnowing } from "./items";
@@ -14,7 +15,8 @@ import { Items, OrbOfKnowing } from "./items";
 export type HostileEntities =
   | BlindGuardian.BlindGuardian
   | WanderingHusk.WanderingHusk
-  | SinisterDolls.SinisterDolls;
+  | SinisterDolls.SinisterDolls
+  | Seeker.Seeker;
 
 export type Entity = Player.Player | Exit.Exit | HostileEntities | Items;
 
@@ -39,6 +41,8 @@ export const getDescription = (e: Entity): string => {
       return "a mysterious, translucent orb";
     case "sinister-dolls":
       return "two lifelike dolls";
+    case "seeker":
+      return "the seeker";
   }
 };
 
@@ -53,6 +57,8 @@ export const generateAiInstructions = (
       return WanderingHusk.next(e, gameData);
     case "sinister-dolls":
       return SinisterDolls.next(e, gameData);
+    case "seeker":
+      return Seeker.next(e, gameData);
     default:
       return [];
   }

@@ -8,8 +8,8 @@ interface Props {
 
 export const Chat = ({ messages }: Props): JSX.Element => (
   <div className={styles.root}>
-    {messages.map(m => (
-      <div>{m.message}</div>
+    {messages.map((m, i) => (
+      <div key={i}>{m.message}</div>
     ))}
   </div>
 );

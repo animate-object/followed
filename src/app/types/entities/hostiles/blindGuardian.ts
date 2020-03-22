@@ -46,5 +46,3 @@ export const next = (
     Instruction.move(e.id, direction)
   ];
 };
-
-export const DISPLAY = "🗿";

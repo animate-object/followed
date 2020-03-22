@@ -10,6 +10,27 @@ export interface EntityData {
   typeMap: Record<string, ID.ID[]>;
 }
 
+export const addEntity = (
+  { entityMap, positionMap, playerEntityId, typeMap }: EntityData,
+  d: Dimension.Dimension,
+  e: Entity.Entity
+): EntityData.EntityData => {
+  const index = Point.toIndex(e.position, d);
+
+  return {
+    playerEntityId,
+    positionMap: {
+      ...positionMap,
+      [index]: positionMap[index] ? [...positionMap[index], e.id] : [e.id]
+    },
+    entityMap: { ...entityMap, [e.id]: e },
+    typeMap: {
+      ...typeMap,
+      [e.type]: typeMap[e.type] ? [...typeMap[e.type], e.id] : [e.id]
+    }
+  };
+};
+
 export const fromEntities = (
   entities: Entity.Entity[],
   dimension: Dimension.Dimension

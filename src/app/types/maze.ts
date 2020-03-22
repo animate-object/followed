@@ -43,6 +43,27 @@ export const fromMazeData = ({
   };
 };
 
+/**
+ * Find traversable neighbors for a point `p` within a `maze`
+ * Given their traversability, they should be in bounds
+ * @param maze
+ * @param p
+ */
+export const traversableNeighbors = (
+  maze: Maze,
+  p: Point.Point
+): Point.Point[] =>
+  Direction.all()
+    .filter(d => canWalk(maze, p, d))
+    .map(d => Point.neighbor(p, d));
+
+/**
+ * Answers the question in this `maze`, from this `point`,
+ * can we move in `direction`
+ * @param maze the maze to query
+ * @param startingPoint the point to query from
+ * @param direction the direct to test
+ */
 export const canWalk = (
   maze: Maze,
   { x, y }: Point.Point,
@@ -52,6 +73,14 @@ export const canWalk = (
   return !Cell.hasWall(cell, direction);
 };
 
+/**
+ * Take directions as an ordered set of movement instructions
+ * Answer the question: given a `maze` from starting point `p`,
+ * can an entity follow the direction set without hitting a walla
+ * @param maze
+ * @param p
+ * @param directions
+ */
 export const canTravel = (
   maze: Maze,
   p: Point.Point,

@@ -5,6 +5,7 @@ import * as BlindGuardian from "./hostiles/blindGuardian";
 import * as WanderingHusk from "./hostiles/wanderingHusk";
 import * as Exit from "./exit";
 import * as SinisterDolls from "./hostiles/sinisterDolls";
+import * as Seeker from "./hostiles/seeker";
 
 export {
   Player,
@@ -13,5 +14,6 @@ export {
   BlindGuardian,
   WanderingHusk,
   Exit,
-  SinisterDolls
+  SinisterDolls,
+  Seeker
 };

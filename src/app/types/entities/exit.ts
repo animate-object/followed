@@ -12,5 +12,3 @@ export const create = (position: Point.Point): Exit => ({
   type: "exit",
   cls: BaseEntity.EntityClass.INANIMATE
 });
-
-export const DISPLAY = "🚪";

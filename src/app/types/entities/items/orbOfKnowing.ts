@@ -5,7 +5,9 @@ import * as GameData from "../../game/gameData";
 import * as EntityData from "../../game/entityData";
 import * as Exit from "../exit";
 import { Item, baseItem } from "./item";
-import { ID } from "../..";
+import { ID, Maze } from "../..";
+import { Seeker } from "..";
+import { Arrays } from "../../../util";
 
 export interface OrbOfKnowing extends Item {
   type: "orb-of-knowing";
@@ -28,11 +30,22 @@ export const knowing = (id: ID.ID): Phenomenon.Phenomenon => ({
       "You feel enlightened by the forces of providence.\n" +
         "For in thine posession is the Orb of Knowing."
     );
+
+    alert("Something has entered the maze.");
+
     return [
       ...EntityData.byType(gameData.entityData, "exit")
         .map(e => e as Exit.Exit)
         .map(exit => Point.toIndex(exit.position, gameData.maze.dimension))
         .map(p => Instruction.see([p])),
+      Instruction.add(
+        Seeker.create(
+          Point.fromIndex(
+            Arrays.randomItem(gameData.maze.deadends.unused),
+            gameData.maze.dimension
+          )
+        )
+      ),
       Instruction.remove(id)
     ];
   }

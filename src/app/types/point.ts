@@ -44,3 +44,6 @@ export const diagonalNeighbors = (p: Point, d: Dimension.Dimension): Point[] =>
 
 export const equals = (a: Point.Point, b: Point.Point): boolean =>
   a.x === b.x && a.y === b.y;
+
+export const distance = (a: Point.Point, b: Point.Point): number =>
+  Math.sqrt(Math.pow(a.x - b.x, 2) + Math.pow(a.y - b.y, 2));
