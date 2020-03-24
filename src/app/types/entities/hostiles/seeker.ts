@@ -11,6 +11,7 @@ import {
   Dimension
 } from "../..";
 import { maze } from "../../../util/api";
+import { MoveInstruction } from "../../instructions/move";
 
 /**
  * The seeker is a merciless hunter from another world.
@@ -47,24 +48,34 @@ export const next = (
   e: Seeker,
   gameData: GameData.GameData
 ): Instruction.Instruction[] => {
-  const instructions: Instruction.Instruction[] = [];
+  const instructions: Instruction.Instruction[] = [
+    Instruction.update({ ...e, steps: e.steps + 1 })
+  ];
   if (
     (e.steps < 15 && e.steps % 3 === 0) ||
     (e.steps >= 15 && e.steps < 30 && e.steps % 2 === 0) ||
     e.steps > 30
   ) {
     const instruction = generateMoveInstruction(e, gameData);
+
     if (instruction != null) {
+      console.log(
+        "moving " +
+          instruction.payload.direction +
+          ` (${e.position.x}, ${e.position.y})`
+      );
       instructions.push(instruction);
     }
+  } else {
+    console.log("passing " + e.steps);
   }
-  return instructions.concat(Instruction.update({ ...e, steps: e.steps + 1 }));
+  return instructions;
 };
 
 export const generateMoveInstruction = (
   e: Seeker,
   gameData: GameData.GameData
-): Maybe.Maybe<Instruction.Instruction> => {
+): Maybe.Maybe<MoveInstruction> => {
   const target = EntityData.getPlayer(gameData.entityData).position;
   const start = e.position;
   const dimension = gameData.maze.dimension;
