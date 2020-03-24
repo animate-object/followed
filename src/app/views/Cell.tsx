@@ -11,8 +11,8 @@ interface Props {
   meta: CellMeta;
 }
 
-const IS_WALL = "0.5px solid #444444";
-const IS_OPEN = "0.5px solid transparent";
+const IS_WALL = "4px solid #444444";
+const IS_OPEN = "4px solid transparent";
 const drawSide = (wall: boolean) => (wall ? IS_WALL : IS_OPEN);
 
 const getEntityToDraw = ({

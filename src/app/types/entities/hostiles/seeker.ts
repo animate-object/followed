@@ -1,4 +1,4 @@
-import { BaseEntity } from "..";
+import { BaseEntity, Seeker } from "..";
 import { GameData, EntityData } from "../../game";
 import {
   Instruction,
@@ -17,13 +17,15 @@ import { maze } from "../../../util/api";
  */
 export interface Seeker extends BaseEntity.HostileEntity {
   type: "seeker";
+  steps: number;
 }
 
 export const create = (position: Point.Point = Point.create()): Seeker => ({
   type: "seeker",
   position,
   id: ID.create(),
-  cls: BaseEntity.EntityClass.HOSTILE
+  cls: BaseEntity.EntityClass.HOSTILE,
+  steps: 0
 });
 
 export const prioritize = (p: Point.Point, target: Point.Point): number =>
@@ -45,6 +47,24 @@ export const next = (
   e: Seeker,
   gameData: GameData.GameData
 ): Instruction.Instruction[] => {
+  const instructions: Instruction.Instruction[] = [];
+  if (
+    (e.steps < 15 && e.steps % 3 === 0) ||
+    (e.steps >= 15 && e.steps < 30 && e.steps % 2 === 0) ||
+    e.steps > 30
+  ) {
+    const instruction = generateMoveInstruction(e, gameData);
+    if (instruction != null) {
+      instructions.push(instruction);
+    }
+  }
+  return instructions.concat(Instruction.update({ ...e, steps: e.steps += 1 }));
+};
+
+export const generateMoveInstruction = (
+  e: Seeker,
+  gameData: GameData.GameData
+): Maybe.Maybe<Instruction.Instruction> => {
   const target = EntityData.getPlayer(gameData.entityData).position;
   const start = e.position;
   const dimension = gameData.maze.dimension;
@@ -98,10 +118,7 @@ export const next = (
     result
   );
 
-  return Maybe.withDefault(
-    Maybe.map(d => [Instruction.move(e.id, d)], direction),
-    []
-  );
+  return Maybe.map(d => Instruction.move(e.id, d), direction);
 };
 
 export const calculateOptimalMove = (

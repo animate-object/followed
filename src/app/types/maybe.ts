@@ -16,7 +16,7 @@ export const map = <T, R>(f: (t: T) => R, maybe: Maybe<T>): Maybe<R> =>
   maybe != null ? f(maybe) : undefined;
 
 export const ifPresent = <T>(f: (t: T) => void, maybe: Maybe<T>): void => {
-  if (maybe) {
+  if (maybe != null) {
     f(maybe);
   }
 };
