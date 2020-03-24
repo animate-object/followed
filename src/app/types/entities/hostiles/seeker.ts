@@ -58,7 +58,7 @@ export const next = (
       instructions.push(instruction);
     }
   }
-  return instructions.concat(Instruction.update({ ...e, steps: e.steps += 1 }));
+  return instructions.concat(Instruction.update({ ...e, steps: e.steps + 1 }));
 };
 
 export const generateMoveInstruction = (
